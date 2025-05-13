@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bilder-Galerie</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="gallery.js" defer></script>
+  <style>
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+    
+    .gallery-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .gallery-info {
+      padding: 15px;
+    }
+    
+    .gallery-text {
+      color: #F4ECD6;
+      margin-bottom: 8px;
+    }
+    
+    .gallery-user {
+      color: #DF7A49;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .gallery-letterbox {
+      color: #F4ECD6;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    
+    .loader {
+      text-align: center;
+      color: #F4ECD6;
+      margin: 40px 0;
+      font-size: 1.2rem;
+    }
+    
+    .no-images {
+      text-align: center;
+      color: #F4ECD6;
+      margin: 40px 0;
+    }
+    
+    .filter-container {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .filter-input {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    
+    .refresh-button {
+      background-color: #DF7A49;
+      color: #F4ECD6;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .refresh-button:hover {
+      background-color: #c56a3e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="home.html">
+      <img src="/media/img/logo_green.png" alt="Logo" class="logo">
+    </a>
+    <h1>Bilder-Galerie</h1>
+    
+    <div class="filter-container">
+      <input type="text" id="letterboxFilter" placeholder="Briefkasten ID (optional)" class="filter-input">
+      <input type="number" id="limitFilter" placeholder="Anzahl Bilder (max. 20)" min="1" max="20" value="10" class="filter-input">
+      <button id="refreshButton" class="refresh-button">Aktualisieren</button>
+    </div>
+    
+    <div id="loading" class="loader">Bilder werden geladen...</div>
+    <div id="gallery" class="gallery-container"></div>
+    <div id="noImages" class="no-images" style="display: none;">Keine Bilder gefunden</div>
+  </div>
+</body>
+</html>

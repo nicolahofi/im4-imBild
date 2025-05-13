@@ -155,6 +155,28 @@ button:active {
     background-color: #fff;
 }
 
+/* Navigation Links */
+.nav-links {
+    margin: 10px 0 20px 0;
+    text-align: center;
+}
+
+.nav-link {
+    display: inline-block;
+    color: #F4ECD6;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin: 0 5px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
 /* Zusätzliche Media Queries für sehr kleine Bildschirme */
 @media (max-width: 480px) {
     .container {
