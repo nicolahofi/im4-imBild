@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js" defer></script>
+</head>
+<body>
+  <a href="home.html">
+    <img src="/images/logo_green.png" alt="Logo" class="logo">
+  </a>
+  <div class="container">
+    <h1>Foto hochladen</h1>
+    <input type="file" id="fileInput" accept="image/*" />
+    <textarea id="userText" placeholder="Kommentar zur Datei..." rows="3" cols="40"></textarea>
+    <button onclick="upload()">Abschicken</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    async function upload() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (!file) return alert("Bitte eine Datei auswählen");
+      
+      // Name und Letterbox aus localStorage auslesen
+      const name = localStorage.getItem('name') || '';
+      const letterbox = localStorage.getItem('letterbox') || '';
+      
+      // Wenn keine Anmeldedaten vorhanden, zur Anmeldeseite weiterleiten
+      if (!name || !letterbox) {
+        alert("Bitte melde dich zuerst an");
+        window.location.href = 'home.html';
+        return;
+      }
+      
+      const userText = document.getElementById('userText').value;
+      document.getElementById('status').textContent = 'Upload läuft...';
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = reader.result.split(',')[1];
+
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: file.name,
+              type: file.type,
+              data: base64,
+              text: userText,
+              userName: name,          // Name hinzufügen
+              letterboxId: letterbox   // Letterbox-ID hinzufügen
+            })
+          });
+
+          if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+
+          const responseData = await res.json();
+          document.getElementById('status').innerHTML =
+            `<a href="${responseData.link}" target="_blank">📁 Datei-Link öffnen</a>`;
+        } catch (error) {
+          document.getElementById('status').textContent = 'Fehler: ' + error.message;
+          console.error('Upload error:', error);
+        }
+      };
+      
+      reader.readAsDataURL(file);
+    }
+  </script>
+</body>
+</html>
