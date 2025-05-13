@@ -28,11 +28,11 @@ body {
 }
   
 .logo {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    width: 80px;
+    position: relative;
+    width: 180px;
     height: auto;
+    display: block;
+    margin: 0 auto 30px auto;
     z-index: 10;
 }
   
@@ -67,9 +67,23 @@ input[type="file"] {
     margin-bottom: 16px;
     border-radius: 12px;
     width: 100%;
+    position: relative;
 }
 
-/* Custom Styling für den File-Input */
+/* Versteckt den standardmäßigen Text "no file chosen" */
+input[type="file"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #F4ECD6;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+/* Custom Styling für den File-Input Button */
 input[type="file"]::file-selector-button {
     border: none;
     padding: 8px 12px;
@@ -78,6 +92,7 @@ input[type="file"]::file-selector-button {
     color: white;
     cursor: pointer;
     margin-right: 10px;
+    content: "Bild auswählen";
 }
 
 textarea {
@@ -164,7 +179,8 @@ button:active {
     }
     
     .logo {
-        width: 50px;
+        width: 120px;
+        margin-bottom: 15px;
     }
 }
 
@@ -180,7 +196,7 @@ button:active {
 @media (max-height: 480px) and (orientation: landscape) {
     body {
         align-items: flex-start;
-        padding-top: 60px;
+        padding-top: 20px;
     }
     
     .container {
@@ -189,6 +205,11 @@ button:active {
     
     h1 {
         margin-bottom: 15px;
+    }
+    
+    .logo {
+        width: 100px;
+        margin-bottom: 10px;
     }
 }
   
