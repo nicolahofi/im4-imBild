@@ -71,8 +71,8 @@ module.exports = async (req, res) => {
         body: JSON.stringify({
           photo_url,
           text: text || '',
-          userName: userName || '',         // Name hinzufügen
-          letterboxId: letterboxId || ''    // Letterbox-ID hinzufügen
+          user: userName || '',         // Name hinzufügen
+          letterbox_id: letterboxId || ''    // Letterbox-ID hinzufügen
         })
       });
       
