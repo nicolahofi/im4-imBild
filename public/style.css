@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
     margin: 0;
     padding: 20px;
@@ -7,46 +12,87 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    position: relative
-  }
+    position: relative;
+    width: 100%;
+}
   
-  .container {
+.container {
     width: 90%;
     max-width: 400px;
     text-align: center;
-  }
+    padding: 1.5rem;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
   
-  .logo {
-        position: absolute;
-        top: 16px;
-        left: 35px;
-        width: 100px;
-        height: auto;
-      }
+.logo {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    width: 80px;
+    height: auto;
+    z-index: 10;
+}
   
   h1 {
     color: #F4ECD6;
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-  }
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
   
-  input {
-    max-width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
+input[type="text"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    font-size: 1rem;
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     background-color: #F4ECD6;
     color: #4A582E;
     text-align: center;
-    align-items: center;
-  }
-  
-  input::placeholder {
+}
+
+/* Spezieller Stil für den File-Input */
+input[type="file"] {
+    padding: 10px;
+    background-color: #F4ECD6;
     color: #4A582E;
-    opacity: 1;
-  }
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+/* Custom Styling für den File-Input */
+input[type="file"]::file-selector-button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: #DF7A49;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+}
+  
+input::placeholder,
+textarea::placeholder {
+    color: #4A582E;
+    opacity: 0.7;
+}
   
   button {
     padding: 12px 25px;
@@ -56,9 +102,93 @@ body {
     background-color: #DF7A49;
     color: #F4ECD6;
     cursor: pointer;
-  }
+    transition: background-color 0.2s, transform 0.1s;
+    font-weight: bold;
+    width: 100%;
+    max-width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
   
-  button:hover {
-    background-color: #DF7A49;
-  }
+button:hover {
+    background-color: #c56a3e;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Status Styling */
+#status {
+    margin-top: 16px;
+    color: #F4ECD6;
+    font-size: 0.9rem;
+}
+
+#status a {
+    color: #DF7A49;
+    text-decoration: none;
+    background-color: #F4ECD6;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+#status a:hover {
+    background-color: #fff;
+}
+
+/* Zusätzliche Media Queries für sehr kleine Bildschirme */
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 1rem 0.75rem;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    input[type="text"],
+    input[type="file"],
+    textarea {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .logo {
+        width: 50px;
+    }
+}
+
+/* Sicherstellen, dass der Viewport korrekt skaliert wird */
+@media (max-height: 600px) {
+    body {
+        align-items: flex-start;
+        padding-top: 60px;
+    }
+}
+
+/* Anpassungen für Geräte im Landscape-Modus */
+@media (max-height: 480px) and (orientation: landscape) {
+    body {
+        align-items: flex-start;
+        padding-top: 60px;
+    }
+    
+    .container {
+        margin-top: 10px;
+    }
+    
+    h1 {
+        margin-bottom: 15px;
+    }
+}
   
