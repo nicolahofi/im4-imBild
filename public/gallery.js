@@ -40,7 +40,7 @@ async function loadImages() {
   
   try {
     // URL mit Parametern aufbauen
-    let url = '/unload.php?limit=' + limit;
+    let url = 'https://im4-imbild.ch/unload.php?limit=' + limit;
     if (letterboxId) {
       url += '&letterbox_id=' + encodeURIComponent(letterboxId);
     }
