@@ -262,26 +262,28 @@
     // ESP32-Status abrufen
     async function checkESP32Status() {
       try {
-        const response = await fetch(`http://${esp32IP}/status`);
+        const response = await fetch(`http://${esp32IP}/status`, {
+          method: 'GET',
+          mode: 'cors', // Sicherstellen, dass CORS verwendet wird
+        });
         if (!response.ok) {
           throw new Error(`HTTP-Fehler: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         // Status-Werte speichern
         isActive = data.active;
         timeout = data.timeout || 60000;
         lastMotionTime = data.motion_age || 0;
-        
+
         // UI basierend auf dem Status aktualisieren
         updateUI(data);
-        
       } catch (error) {
         console.error('Fehler beim Abrufen des ESP32-Status:', error);
         document.getElementById('status-message').textContent = 'Verbindungsfehler: ' + error.message;
         document.getElementById('status-icon').className = 'status-indicator status-inactive';
-        
+
         // UI zurücksetzen
         document.getElementById('inactive-notice').style.display = 'block';
         document.getElementById('gallery').style.display = 'none';
