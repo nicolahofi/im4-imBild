@@ -87,31 +87,34 @@ async function loadImages() {
   const noImages = document.getElementById('noImages');
   const letterboxId = document.getElementById('letterboxFilter').value.trim();
   let limit = parseInt(document.getElementById('limitFilter').value) || 10;
-  
+
   // Limit auf 20 begrenzen
   if (limit > 20) limit = 20;
   document.getElementById('limitFilter').value = limit;
-  
+
   // UI zurücksetzen
   gallery.innerHTML = '';
   loading.style.display = 'block';
   noImages.style.display = 'none';
-  
+
   try {
     // URL mit Parametern aufbauen
     let url = 'https://im4-imbild.ch/unload.php?limit=' + limit;
     if (letterboxId) {
       url += '&letterbox_id=' + encodeURIComponent(letterboxId);
     }
-    
+
     const response = await fetch(url);
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
+    // Debugging: API-Antwort in der Konsole protokollieren
+    console.log('API Response:', data);
+
     if (data.success && data.count > 0) {
       loadGalleryImages(data.posts);
       loading.style.display = 'none';
@@ -122,63 +125,6 @@ async function loadImages() {
     }
   } catch (error) {
     console.error('Fehler beim Laden der Bilder:', error);
-    
-    // Fehlermeldung anzeigen
-    let errorMsg = 'Fehler beim Laden der Bilder: ' + error.message;
-    
-    // Versuchen, weitere Details zu erhalten
-    try {
-      if (error.message.includes('HTTP error')) {
-        // Füge einen Debug-Button hinzu
-        loading.innerHTML = `
-          ${errorMsg}
-          <div style="margin-top: 10px;">
-            <button id="debugBtn" style="background-color: #666; color: white; padding: 5px 10px; border: none; border-radius: 4px;">
-              Fehlerbehebung starten
-            </button>
-          </div>
-        `;
-        
-        // Event-Listener für den Debug-Button
-        document.getElementById('debugBtn').addEventListener('click', async () => {
-          loading.innerHTML = 'Führe Diagnose durch...';
-          
-          try {
-            // Direkte Anfrage mit weniger Optionen versuchen
-            const testUrl = 'https://im4-imbild.ch/unload.php?limit=1';
-            loading.innerHTML += '<p>Teste einfache Anfrage: ' + testUrl + '</p>';
-            
-            const testResponse = await fetch(testUrl);
-            const testText = await testResponse.text();
-            
-            loading.innerHTML += '<p>Antwort vom Server:</p><pre style="background:#f5f5f5;padding:10px;overflow:auto;max-height:200px;font-size:12px;">' + 
-              testText.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
-            
-            // Versuchen, die Antwort als JSON zu parsen
-            try {
-              JSON.parse(testText);
-              loading.innerHTML += '<p style="color:green;">✓ JSON ist gültig</p>';
-            } catch (e) {
-              loading.innerHTML += '<p style="color:red;">✗ JSON ist ungültig: ' + e.message + '</p>';
-            }
-            
-            // Ratschläge zur Problembehebung
-            loading.innerHTML += '<p>Empfehlungen zur Fehlerbehebung:</p>' + 
-              '<ol>' +
-              '<li>Überprüfen Sie die unload.php auf Ihrem Infomaniak-Server</li>' +
-              '<li>Stellen Sie sicher, dass die Datenbankverbindung funktioniert</li>' +
-              '<li>Überprüfen Sie die Tabellenspalten in der Datenbank</li>' +
-              '<li>Sehen Sie in den Server-Logs nach detaillierten Fehlermeldungen</li>' +
-              '</ol>';
-          } catch (diagError) {
-            loading.innerHTML += '<p>Fehler bei der Diagnose: ' + diagError.message + '</p>';
-          }
-        });
-      } else {
-        loading.textContent = errorMsg;
-      }
-    } catch (e) {
-      loading.textContent = errorMsg;
-    }
+    loading.textContent = 'Fehler beim Laden der Bilder: ' + error.message;
   }
 }
