@@ -21,6 +21,57 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Funktion zum Transformieren von Google Drive Links
+function transformGoogleDriveLink(link) {
+  const match = link.match(/\/d\/([a-zA-Z0-9_-]+)\/view/);
+  if (match && match[1]) {
+    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+  }
+  return link; // Fallback, falls der Link nicht passt
+}
+
+// Funktion zum Laden der Galerie-Bilder
+function loadGalleryImages(images) {
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = ''; // Galerie leeren
+
+  if (images.length === 0) {
+    document.getElementById('noImages').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('noImages').style.display = 'none';
+
+  images.forEach(image => {
+    const transformedLink = transformGoogleDriveLink(image.photo_url);
+
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+
+    const img = document.createElement('img');
+    img.src = transformedLink;
+    img.alt = image.text || 'Bild';
+    img.className = 'gallery-image';
+
+    const info = document.createElement('div');
+    info.className = 'gallery-info';
+
+    const text = document.createElement('p');
+    text.className = 'gallery-text';
+    text.textContent = image.text || 'Kein Text';
+
+    const user = document.createElement('p');
+    user.className = 'gallery-user';
+    user.textContent = `Hochgeladen von: ${image.user}`;
+
+    info.appendChild(text);
+    info.appendChild(user);
+    item.appendChild(img);
+    item.appendChild(info);
+    gallery.appendChild(item);
+  });
+}
+
 // Funktion zum Laden der Bilder
 async function loadImages() {
   const gallery = document.getElementById('gallery');
@@ -54,42 +105,7 @@ async function loadImages() {
     const data = await response.json();
     
     if (data.success && data.count > 0) {
-      // Für jedes Bild einen Eintrag erstellen
-      data.posts.forEach(post => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        
-        // Falls die URL ein Google Drive Link ist, formatieren wir sie um
-        let imageUrl = post.photo_url;
-        
-        // Überprüfen, ob es ein Google Drive Link ist und entsprechend umwandeln
-        if (imageUrl.includes('drive.google.com/file/d/')) {
-          const fileId = imageUrl.match(/\/d\/([^\/]*)/)[1];
-          imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
-        }
-        
-        // Datum formatieren, falls vorhanden
-        let dateDisplay = '';
-        if (post.timestamp) {
-          const date = new Date(post.timestamp);
-          dateDisplay = `<span class="gallery-date">${date.toLocaleDateString()}</span>`;
-        }
-        
-        // HTML für das Galerie-Element zusammenbauen
-        item.innerHTML = `
-          <a href="${post.photo_url}" target="_blank">
-            <img src="${imageUrl}" alt="${post.text || 'Bild'}" class="gallery-image" onerror="this.src='/media/img/image-placeholder.png'">
-          </a>
-          <div class="gallery-info">
-            <p class="gallery-text">${post.text || ''}</p>
-            <p class="gallery-user">Von: ${post.user || 'Anonym'} ${dateDisplay}</p>
-            <p class="gallery-letterbox">Briefkasten: ${post.letterbox_id || 'Unbekannt'}</p>
-          </div>
-        `;
-        
-        gallery.appendChild(item);
-      });
-      
+      loadGalleryImages(data.posts);
       loading.style.display = 'none';
     } else {
       // Keine Bilder gefunden
