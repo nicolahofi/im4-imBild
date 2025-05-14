@@ -30,15 +30,16 @@ body {
 .container div {
   margin-bottom: 16px; /* Gleicher Abstand wie zwischen Nachricht und Hochladen */
 }
-  
+
 .logo {
     position: relative;
     width: 180px;
     height: auto;
     display: block;
-    /* margin: 0 auto 30px auto; */
+    margin: 0 auto 30px auto;
     z-index: 10;
 }
+
 
   h1 {
     color: #F4ECD6;
