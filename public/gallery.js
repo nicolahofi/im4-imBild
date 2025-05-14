@@ -1,19 +1,27 @@
 // gallery.js - JavaScript für die Bildergalerie
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Briefkasten-ID aus der URL lesen
+  const urlParams = new URLSearchParams(window.location.search);
+  const letterboxIdFromUrl = urlParams.get('letterbox_id');
+
+  if (letterboxIdFromUrl) {
+    document.getElementById('letterboxFilter').value = letterboxIdFromUrl;
+  }
+
   // Initial alle Bilder laden
   loadImages();
-  
+
   // Event-Listener für den Aktualisieren-Button
   document.getElementById('refreshButton').addEventListener('click', loadImages);
-  
+
   // Event-Listener für Enter-Taste im Filter-Feld
   document.getElementById('letterboxFilter').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       loadImages();
     }
   });
-  
+
   document.getElementById('limitFilter').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       loadImages();

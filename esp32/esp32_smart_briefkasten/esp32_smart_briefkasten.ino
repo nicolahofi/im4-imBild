@@ -239,8 +239,7 @@ void setupEndpoints() {
 
     html += "<p>IP-Adresse: " + WiFi.localIP().toString() + "</p>";
     html += "<p><a href='/status' style='color: #7FD1B9;'>Status (JSON)</a></p></div>";
-    html += "<p><a href='" + String(galleryUrl) + "?esp32=" + WiFi.localIP().toString() + 
-            "' onclick=\"fetch('/mark_viewed', {method: 'POST'})\" target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Zur Galerie</a></p>";
+    html += "<p><a href='" + String(galleryUrl) + "?letterbox_id=" + briefkastenId + "' onclick=\"fetch('/mark_viewed', {method: 'POST'})\" target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Zur Galerie</a></p>";
     html += "</body></html>";
 
     server.send(200, "text/html", html);
