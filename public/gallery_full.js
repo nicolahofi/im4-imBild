@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   noImages.style.display = 'none';
 
   try {
-    // URL für die API-Anfrage
-    const url = 'https://im4-imbild.ch/unload.php?letterbox_id=5678&limit=10';
+    // Abruf aller Bilder, unabhängig von viewed
+    const url = 'https://im4-imbild.ch/unload.php?letterbox_id=5678&limit=100&viewed=all';
     const response = await fetch(url);
 
     if (!response.ok) {
