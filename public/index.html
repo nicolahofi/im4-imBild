@@ -1,94 +1,24 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Foto hochladen</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anmeldung</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <a href="home.html">
-      <img src="/media/img/logo_green.png" alt="Logo" class="logo" />
+    <a href="index.html">
+      <img src="/media/img/logo_green.png" alt="Logo" class="logo">
     </a>
-    <h1>Foto hochladen</h1>
-
+    <h1>Anmeldung</h1>
     <p class="nav-links">
       <a href="gallery.html" class="nav-link">Galerie anzeigen</a>
     </p>
-
-    <!-- Kamera-Upload -->
-    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;" />
-    <button onclick="document.getElementById('cameraInput').click()">
-      <img src="media/img/camera-solid.svg" alt="Kamera" style="width: 24px; height: 24px; vertical-align: middle;" />
-    </button>
-
-    <!-- Galerie-Upload -->
-    <input type="file" id="galleryInput" accept="image/*" style="display: none;" />
-    <button onclick="document.getElementById('galleryInput').click()">
-      <img src="media/img/images-solid.svg" alt="Galerie" style="width: 24px; height: 24px; vertical-align: middle;" />
-    </button>
-
-    <textarea id="userText" placeholder="Kommentar zur Datei..." rows="3" cols="40"></textarea>
-    <p id="status"></p>
-
-    <script>
-      document.getElementById('cameraInput').addEventListener('change', () => upload('cameraInput'));
-      document.getElementById('galleryInput').addEventListener('change', () => upload('galleryInput'));
-
-      async function upload(inputId) {
-        const fileInput = document.getElementById(inputId);
-        const file = fileInput.files[0];
-        if (!file) return alert("Bitte ein Bild auswählen");
-
-        const name = localStorage.getItem('name') || '';
-        const letterbox = localStorage.getItem('letterbox') || '';
-
-        if (!name || !letterbox) {
-          alert("Bitte melde dich zuerst an");
-          window.location.href = 'home.html';
-          return;
-        }
-
-        const userText = document.getElementById('userText').value;
-        document.getElementById('status').textContent = 'Upload läuft...';
-
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const base64 = reader.result.split(',')[1];
-
-          try {
-            const res = await fetch('/api/upload', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                name: file.name,
-                type: file.type,
-                data: base64,
-                text: userText,
-                userName: name,
-                letterboxId: letterbox
-              })
-            });
-
-            if (!res.ok) {
-              throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-
-            const responseData = await res.json();
-            document.getElementById('status').innerHTML =
-              `<a href="${responseData.link}" target="_blank">📁 Datei-Link öffnen</a>`;
-          } catch (error) {
-            document.getElementById('status').textContent = 'Fehler: ' + error.message;
-            console.error('Upload error:', error);
-          }
-        };
-
-        reader.readAsDataURL(file);
-      }
-    </script>
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="letterbox" placeholder="Briefkasten ID">
+    <button id="save-and-continue">weiter</button>
   </div>
 </body>
 </html>

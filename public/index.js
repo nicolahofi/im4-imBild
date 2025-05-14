@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('letterbox', boxInput.value.trim());
   
       // Weiterleitung (Dateiname anpassen)
-      window.location.href = 'index.html';
+      window.location.href = 'upload.html';
     });
   });
   
