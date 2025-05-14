@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event-Listener für den Aktualisieren-Button
   document.getElementById('refreshButton').addEventListener('click', loadImages);
+
+  // Event-Listener für den Vollständige Galerie Button
+  document.getElementById('fullGalleryButton').addEventListener('click', () => {
+    window.location.href = 'gallery_full.html';
+  });
 });
 
 // Funktion zum Transformieren von Google Drive Links

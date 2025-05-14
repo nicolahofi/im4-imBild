@@ -144,6 +144,8 @@ void checkForNewData() {
   client.setInsecure();
 
   HTTPClient http;
+
+  // Filtere nur Bilder mit der Briefkasten-ID 5678 und viewed=0
   String url = String(unloadUrl) + "&letterbox_id=" + briefkastenId + "&viewed=false";
 
   http.begin(client, url);
@@ -177,12 +179,10 @@ void checkForNewData() {
         setRingColor(newDataFound ? LED_COLOR_GREEN : LED_COLOR_RED);
       }
     } else {
-      Serial.println("JSON-Fehler");
-      if (motionDetected) blinkRing(LED_COLOR_RED, 2, 300);
+      Serial.println("JSON-Fehler oder keine neuen Bilder gefunden.");
     }
   } else {
     Serial.printf("HTTPS-Fehler: %d\n", code);
-    if (motionDetected) blinkRing(LED_COLOR_RED, 3, 200);
   }
 
   http.end();

@@ -1,0 +1,58 @@
+document.addEventListener('DOMContentLoaded', async () => {
+  const gallery = document.getElementById('gallery');
+  const loading = document.getElementById('loading');
+  const noImages = document.getElementById('noImages');
+
+  // UI zurücksetzen
+  gallery.innerHTML = '';
+  loading.style.display = 'block';
+  noImages.style.display = 'none';
+
+  try {
+    // URL für die API-Anfrage
+    const url = 'https://im4-imbild.ch/unload.php?letterbox_id=5678&limit=10';
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success && data.count > 0) {
+      data.posts.forEach(image => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+
+        const img = document.createElement('img');
+        img.src = image.photo_url;
+        img.alt = image.text || 'Bild';
+        img.className = 'gallery-image';
+
+        const info = document.createElement('div');
+        info.className = 'gallery-info';
+
+        const text = document.createElement('p');
+        text.className = 'gallery-text';
+        text.textContent = image.text || 'Kein Text';
+
+        const user = document.createElement('p');
+        user.className = 'gallery-user';
+        user.textContent = `Hochgeladen von: ${image.user}`;
+
+        info.appendChild(text);
+        info.appendChild(user);
+        item.appendChild(img);
+        item.appendChild(info);
+        gallery.appendChild(item);
+      });
+      loading.style.display = 'none';
+    } else {
+      loading.style.display = 'none';
+      noImages.style.display = 'block';
+    }
+  } catch (error) {
+    console.error('Fehler beim Laden der Bilder:', error);
+    loading.textContent = 'Fehler beim Laden der Bilder: ' + error.message;
+  }
+});
