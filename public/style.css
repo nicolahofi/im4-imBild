@@ -23,8 +23,12 @@ body {
     padding: 1.5rem;
     border-radius: 15px;
     /* background-color: rgba(255, 255, 255, 0.05); */
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* backdrop-filter: blur(5px); */
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+.container div {
+  margin-bottom: 16px; /* Gleicher Abstand wie zwischen Nachricht und Hochladen */
 }
   
 .logo {
@@ -35,7 +39,7 @@ body {
     margin: 0 auto 30px auto;
     z-index: 10;
 }
-  
+
   h1 {
     color: #F4ECD6;
     font-size: 1.8rem;
