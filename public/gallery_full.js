@@ -23,26 +23,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       data.posts.forEach(image => {
         const item = document.createElement('div');
         item.className = 'gallery-item';
-
-        const img = document.createElement('img');
-        img.src = image.photo_url;
-        img.alt = image.text || 'Bild';
-        img.className = 'gallery-image';
+        item.onclick = () => window.open(image.photo_url, '_blank');
 
         const info = document.createElement('div');
         info.className = 'gallery-info';
 
-        const text = document.createElement('p');
-        text.className = 'gallery-text';
-        text.textContent = image.text || 'Kein Text';
-
         const user = document.createElement('p');
         user.className = 'gallery-user';
-        user.textContent = `Hochgeladen von: ${image.user}`;
+        user.textContent = `Absender: ${image.user}`;
 
-        info.appendChild(text);
+        const date = document.createElement('p');
+        date.className = 'gallery-date';
+        date.textContent = `Datum: ${image.date || 'Unbekannt'}`;
+
+        const text = document.createElement('p');
+        text.className = 'gallery-text';
+        text.textContent = image.text || 'Keine Nachricht';
+
         info.appendChild(user);
-        item.appendChild(img);
+        info.appendChild(date);
+        info.appendChild(text);
         item.appendChild(info);
         gallery.appendChild(item);
       });
