@@ -264,7 +264,7 @@
       try {
         const response = await fetch(`http://${esp32IP}/status`, {
           method: 'GET',
-          mode: 'cors',
+          mode: 'no-cors',
           cache: 'no-cache', // Sicherstellen, dass keine zwischengespeicherten Daten verwendet werden
         });
         if (!response.ok) {
