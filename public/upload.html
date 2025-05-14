@@ -29,10 +29,11 @@
     <!-- Galerie-Upload -->
     <input type="file" id="galleryInput" accept="image/*" style="display: none;" />
 
-    <!-- Upload-Button -->
+    <textarea id="userText" placeholder="Deine Nachricht:" rows="3" cols="40"></textarea>
+
+        <!-- Upload-Button -->
     <button id="uploadButton" onclick="manualUpload()">Hochladen</button>
 
-    <textarea id="userText" placeholder="Deine Nachricht:" rows="3" cols="40"></textarea>
     <p id="status"></p>
 
     <script>
@@ -91,6 +92,12 @@
             }
 
             document.getElementById('status').textContent = 'Upload erfolgreich!';
+
+            // Nach erfolgreichem Upload das Formular zurücksetzen
+            selectedFile = null;
+            document.getElementById('cameraInput').value = '';
+            document.getElementById('galleryInput').value = '';
+            document.getElementById('userText').value = '';
           } catch (error) {
             document.getElementById('status').textContent = 'Fehler: ' + error.message;
             console.error('Upload error:', error);
