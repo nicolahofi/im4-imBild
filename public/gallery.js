@@ -1,26 +1,11 @@
 // gallery.js - JavaScript für die Bildergalerie
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Briefkasten-ID aus der URL lesen
-  const urlParams = new URLSearchParams(window.location.search);
-  const letterboxIdFromUrl = urlParams.get('letterbox_id');
-
-  if (letterboxIdFromUrl) {
-    document.getElementById('letterboxFilter').value = letterboxIdFromUrl;
-  }
-
   // Initial alle Bilder laden
   loadImages();
 
   // Event-Listener für den Aktualisieren-Button
   document.getElementById('refreshButton').addEventListener('click', loadImages);
-
-  // Event-Listener für Enter-Taste im Filter-Feld
-  document.getElementById('letterboxFilter').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      loadImages();
-    }
-  });
 });
 
 // Funktion zum Transformieren von Google Drive Links
@@ -79,7 +64,6 @@ async function loadImages() {
   const gallery = document.getElementById('gallery');
   const loading = document.getElementById('loading');
   const noImages = document.getElementById('noImages');
-  const letterboxId = document.getElementById('letterboxFilter').value.trim();
 
   let limit = 10; // Standardlimit von 10 Bildern
 
@@ -89,11 +73,11 @@ async function loadImages() {
   noImages.style.display = 'none';
 
   try {
-    // URL mit Parametern aufbauen
-    let url = 'https://im4-imbild.ch/unload.php?limit=' + limit;
-    if (letterboxId) {
-      url += '&letterbox_id=' + encodeURIComponent(letterboxId);
-    }
+    // Briefkasten-ID festlegen
+    const letterboxId = '5678';
+
+    // URL mit festgelegter Briefkasten-ID aufbauen
+    let url = 'https://im4-imbild.ch/unload.php?letterbox_id=' + letterboxId;
 
     const response = await fetch(url);
 
