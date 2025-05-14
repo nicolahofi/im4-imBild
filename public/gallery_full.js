@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const date = document.createElement('p');
         date.className = 'gallery-date';
-        date.textContent = `Datum: ${image.date || 'Unbekannt'}`;
+        date.textContent = `Datum: ${new Date(image.timestamp).toLocaleDateString('de-DE')}`;
 
         const text = document.createElement('p');
         text.className = 'gallery-text';
