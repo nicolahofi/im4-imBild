@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const nameInput = document.getElementById('name');
     const boxInput = document.getElementById('letterbox');
+    const errorMessage = document.getElementById('error-message');
   
     // Eingaben vorausfüllen, wenn bereits gespeichert
     nameInput.value = localStorage.getItem('name') || '';
@@ -10,9 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('name', nameInput.value.trim());
       localStorage.setItem('letterbox', boxInput.value.trim());
   
-      // Weiterleitung (Dateiname anpassen)
+      // Überprüfen, ob die Briefkasten ID ausgefüllt ist
+      if (!boxInput.value.trim()) {
+        errorMessage.textContent = 'Bitte die Briefkasten ID ausfüllen.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+  
+      errorMessage.style.display = 'none'; // Fehlernachricht ausblenden, wenn das Feld ausgefüllt ist
       window.location.href = 'upload.html';
     });
   });
-  
-  
+
