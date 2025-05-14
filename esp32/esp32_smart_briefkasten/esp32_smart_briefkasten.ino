@@ -239,7 +239,11 @@ void setupEndpoints() {
 
     html += "<p>IP-Adresse: " + WiFi.localIP().toString() + "</p>";
     html += "<p><a href='/status' style='color: #7FD1B9;'>Status (JSON)</a></p></div>";
-    html += "<p><a href='" + String(galleryUrl) + "?letterbox_id=" + briefkastenId + "' target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;' onclick=\"fetch('/mark_viewed', {method: 'POST'}).then(() => console.log('Marked as viewed')).catch(err => console.error('Error marking as viewed:', err))\">Zur Galerie</a></p>";
+
+    if (newDataFound) {
+      html += "<p><a href='" + String(galleryUrl) + "?letterbox_id=" + briefkastenId + "' target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;' onclick=\"fetch('/mark_viewed', {method: 'POST'})\">Zur Galerie</a></p>";
+    }
+
     html += "</body></html>";
 
     server.send(200, "text/html", html);

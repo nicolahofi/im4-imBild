@@ -21,12 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
       loadImages();
     }
   });
-
-  document.getElementById('limitFilter').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      loadImages();
-    }
-  });
 });
 
 // Funktion zum Transformieren von Google Drive Links
@@ -86,11 +80,8 @@ async function loadImages() {
   const loading = document.getElementById('loading');
   const noImages = document.getElementById('noImages');
   const letterboxId = document.getElementById('letterboxFilter').value.trim();
-  let limit = parseInt(document.getElementById('limitFilter').value) || 10;
 
-  // Limit auf 20 begrenzen
-  if (limit > 20) limit = 20;
-  document.getElementById('limitFilter').value = limit;
+  let limit = 10; // Standardlimit von 10 Bildern
 
   // UI zurücksetzen
   gallery.innerHTML = '';
@@ -112,7 +103,8 @@ async function loadImages() {
 
     const data = await response.json();
 
-    // Debugging: API-Antwort in der Konsole protokollieren
+    // Debugging erweitern: API-URL und vollständige Antwort protokollieren
+    console.log('API Request URL:', url);
     console.log('API Response:', data);
 
     if (data.success && data.count > 0) {
@@ -120,6 +112,7 @@ async function loadImages() {
       loading.style.display = 'none';
     } else {
       // Keine Bilder gefunden
+      console.warn('Keine Bilder gefunden. API Response:', data);
       loading.style.display = 'none';
       noImages.style.display = 'block';
     }
