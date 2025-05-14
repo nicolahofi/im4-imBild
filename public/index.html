@@ -17,8 +17,20 @@
       <a href="gallery.html" class="nav-link">Galerie anzeigen</a>
     </p>
     <input type="text" id="name" placeholder="Name">
-    <input type="text" id="letterbox" placeholder="Briefkasten ID" required>
+    <input type="text" id="letterbox" placeholder="Briefkasten ID">
     <button id="save-and-continue">weiter</button>
   </div>
+  <script>
+    document.getElementById('save-and-continue').addEventListener('click', () => {
+      const letterbox = document.getElementById('letterbox').value.trim();
+
+      if (!letterbox) {
+        alert('Bitte die Briefkasten ID ausfüllen.');
+        return;
+      }
+
+      // Weiterleitung oder andere Logik hier
+    });
+  </script>
 </body>
 </html>
