@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart-Briefkasten Galerie</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+    
+    .gallery-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .gallery-info {
+      padding: 15px;
+    }
+    
+    .gallery-text {
+      color: #F4ECD6;
+      margin-bottom: 8px;
+    }
+    
+    .gallery-user {
+      color: #DF7A49;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .gallery-letterbox {
+      color: #F4ECD6;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    
+    .loader {
+      text-align: center;
+      color: #F4ECD6;
+      margin: 40px 0;
+      font-size: 1.2rem;
+    }
+    
+    .no-images {
+      text-align: center;
+      color: #F4ECD6;
+      margin: 40px 0;
+    }
+    
+    .inactive-notice {
+      text-align: center;
+      color: #F4ECD6;
+      margin: 40px 0;
+      padding: 20px;
+      background-color: rgba(223, 122, 73, 0.2);
+      border-radius: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .status-container {
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .status-active {
+      background-color: #33ff33;
+    }
+    
+    .status-inactive {
+      background-color: #ff3333;
+    }
+    
+    .status-unknown {
+      background-color: #ffff33;
+    }
+    
+    .status-text {
+      color: #F4ECD6;
+      margin-bottom: 5px;
+    }
+    
+    .timer-bar {
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    
+    .timer-progress {
+      height: 100%;
+      background-color: #DF7A49;
+      width: 100%;
+      transition: width 1s linear;
+    }
+    
+    .connect-form {
+      margin: 20px auto;
+      max-width: 400px;
+      text-align: center;
+    }
+    
+    .esp32-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      color: #F4ECD6;
+    }
+    
+    .connect-button {
+      background-color: #DF7A49;
+      color: #F4ECD6;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    
+    .connect-button:hover {
+      background-color: #c56a3e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="home.html">
+      <img src="/media/img/logo_green.png" alt="Logo" class="logo">
+    </a>
+    <h1>Smart-Briefkasten Galerie</h1>
+    
+    <div id="esp32-connect" class="connect-form">
+      <p>Verbinde dich mit deinem ESP32 Smart-Briefkasten:</p>
+      <input type="text" id="esp32-ip" placeholder="ESP32 IP-Adresse (z.B. 192.168.1.100)" class="esp32-input">
+      <button id="connect-button" class="connect-button">Verbinden</button>
+    </div>
+    
+    <div id="status" class="status-container" style="display: none;">
+      <div class="status-text">
+        <span id="status-icon" class="status-indicator status-unknown"></span>
+        <span id="status-message">Verbinde mit ESP32...</span>
+      </div>
+      <div id="timer-container" style="display: none;">
+        <div class="timer-bar">
+          <div id="timer-progress" class="timer-progress"></div>
+        </div>
+        <div id="timer-text">Verbleibende Zeit: --:--</div>
+      </div>
+    </div>
+    
+    <div id="inactive-notice" class="inactive-notice" style="display: none;">
+      <h2>Briefkasten ist inaktiv</h2>
+      <p>Um die Galerie anzuzeigen, öffne bitte den Briefkasten.</p>
+      <p>Der Bewegungssensor im Briefkasten aktiviert die Anzeige der Bilder.</p>
+    </div>
+    
+    <div id="loading" class="loader" style="display: none;">Bilder werden geladen...</div>
+    <div id="gallery" class="gallery-container" style="display: none;"></div>
+    <div id="noImages" class="no-images" style="display: none;">Keine Bilder gefunden</div>
+  </div>
+
+  <script>
+    // Globale Variablen
+    let esp32IP = '';
+    let isActive = false;
+    let statusCheckInterval = null;
+    let timerInterval = null;
+    let timeout = 60000; // Standard-Timeout in Millisekunden (wird vom ESP32 aktualisiert)
+    let lastMotionTime = 0;
+    
+    // DOM geladen
+    document.addEventListener('DOMContentLoaded', () => {
+      // URL-Parameter prüfen
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('esp32')) {
+        const ipFromUrl = urlParams.get('esp32');
+        document.getElementById('esp32-ip').value = ipFromUrl;
+        connectToESP32(ipFromUrl);
+      }
+      
+      // Event-Listener für den Verbinden-Button
+      document.getElementById('connect-button').addEventListener('click', () => {
+        const ip = document.getElementById('esp32-ip').value.trim();
+        if (ip) {
+          connectToESP32(ip);
+        } else {
+          alert('Bitte gib eine gültige IP-Adresse ein.');
+        }
+      });
+      
+      // Enter-Taste im Input-Feld
+      document.getElementById('esp32-ip').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const ip = document.getElementById('esp32-ip').value.trim();
+          if (ip) {
+            connectToESP32(ip);
+          }
+        }
+      });
+    });
+    
+    // Verbindung zum ESP32 herstellen
+    async function connectToESP32(ip) {
+      esp32IP = ip;
+      
+      // UI aktualisieren
+      document.getElementById('esp32-connect').style.display = 'none';
+      document.getElementById('status').style.display = 'block';
+      document.getElementById('status-message').textContent = 'Verbinde mit ESP32...';
+      document.getElementById('status-icon').className = 'status-indicator status-unknown';
+      
+      try {
+        // Ersten Status abrufen
+        await checkESP32Status();
+        
+        // Regelmäßige Status-Überprüfung einrichten
+        clearInterval(statusCheckInterval);
+        statusCheckInterval = setInterval(checkESP32Status, 2000);
+        
+      } catch (error) {
+        console.error('Fehler bei der Verbindung zum ESP32:', error);
+        document.getElementById('status-message').textContent = 'Verbindungsfehler: ' + error.message;
+        document.getElementById('status-icon').className = 'status-indicator status-inactive';
+      }
+    }
+    
+    // ESP32-Status abrufen
+    async function checkESP32Status() {
+      try {
+        const response = await fetch(`http://${esp32IP}/status`);
+        if (!response.ok) {
+          throw new Error(`HTTP-Fehler: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Status-Werte speichern
+        isActive = data.active;
+        timeout = data.timeout || 60000;
+        lastMotionTime = data.motion_age || 0;
+        
+        // UI basierend auf dem Status aktualisieren
+        updateUI(data);
+        
+      } catch (error) {
+        console.error('Fehler beim Abrufen des ESP32-Status:', error);
+        document.getElementById('status-message').textContent = 'Verbindungsfehler: ' + error.message;
+        document.getElementById('status-icon').className = 'status-indicator status-inactive';
+        
+        // UI zurücksetzen
+        document.getElementById('inactive-notice').style.display = 'block';
+        document.getElementById('gallery').style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('noImages').style.display = 'none';
+        document.getElementById('timer-container').style.display = 'none';
+      }
+    }
+    
+    // UI basierend auf dem ESP32-Status aktualisieren
+    function updateUI(statusData) {
+      // Status anzeigen
+      document.getElementById('status-message').textContent = statusData.active 
+        ? 'Briefkasten ist aktiv - Bewegung erkannt!' 
+        : 'Briefkasten ist inaktiv - Keine Bewegung.';
+      
+      document.getElementById('status-icon').className = statusData.active 
+        ? 'status-indicator status-active' 
+        : 'status-indicator status-inactive';
+      
+      // Timer aktualisieren, wenn aktiv
+      if (statusData.active) {
+        const remainingTime = Math.max(0, timeout - lastMotionTime);
+        const remainingPercent = (remainingTime / timeout) * 100;
+        const remainingSeconds = Math.ceil(remainingTime / 1000);
+        
+        document.getElementById('timer-container').style.display = 'block';
+        document.getElementById('timer-progress').style.width = remainingPercent + '%';
+        document.getElementById('timer-text').textContent = `Verbleibende Zeit: ${remainingSeconds} Sekunden`;
+        
+        // Timer starten, wenn noch nicht aktiv
+        if (!timerInterval) {
+          timerInterval = setInterval(updateTimer, 1000);
+        }
+      } else {
+        // Timer anhalten, wenn inaktiv
+        clearInterval(timerInterval);
+        timerInterval = null;
+        document.getElementById('timer-container').style.display = 'none';
+      }
+      
+      // Bilder anzeigen oder Inaktivitätshinweis
+      if (statusData.active) {
+        document.getElementById('inactive-notice').style.display = 'none';
+        
+        // Bilder laden, wenn sie noch nicht geladen wurden oder es neue gibt
+        if (document.getElementById('gallery').children.length === 0 || statusData.data_available) {
+          loadImages();
+        } else {
+          document.getElementById('gallery').style.display = 'block';
+        }
+      } else {
+        document.getElementById('inactive-notice').style.display = 'block';
+        document.getElementById('gallery').style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('noImages').style.display = 'none';
+      }
+    }
+    
+    // Timer aktualisieren
+    function updateTimer() {
+      if (!isActive) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        return;
+      }
+      
+      // Verbleibende Zeit berechnen (wird bei jedem Status-Check aktualisiert)
+      lastMotionTime += 1000; // Eine Sekunde hinzufügen
+      const remainingTime = Math.max(0, timeout - lastMotionTime);
+      const remainingPercent = (remainingTime / timeout) * 100;
+      const remainingSeconds = Math.ceil(remainingTime / 1000);
+      
+      document.getElementById('timer-progress').style.width = remainingPercent + '%';
+      document.getElementById('timer-text').textContent = `Verbleibende Zeit: ${remainingSeconds} Sekunden`;
+      
+      // Timer stoppen, wenn die Zeit abgelaufen ist
+      if (remainingTime <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        isActive = false;
+        updateUI({ active: false });
+      }
+    }
+    
+    // Bilder von der Datenbank laden
+    async function loadImages() {
+      const gallery = document.getElementById('gallery');
+      const loading = document.getElementById('loading');
+      const noImages = document.getElementById('noImages');
+      
+      // UI zurücksetzen
+      gallery.style.display = 'none';
+      loading.style.display = 'block';
+      noImages.style.display = 'none';
+      
+      try {
+        // URL mit Parametern aufbauen
+        let url = 'https://im4-imbild.ch/unload.php?limit=10';
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && data.count > 0) {
+          // Galerie leeren
+          gallery.innerHTML = '';
+          
+          // Für jedes Bild einen Eintrag erstellen
+          data.posts.forEach(post => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            
+            // Falls die URL ein Google Drive Link ist, formatieren wir sie um
+            let imageUrl = post.photo_url;
+            
+            // Überprüfen, ob es ein Google Drive Link ist und entsprechend umwandeln
+            if (imageUrl.includes('drive.google.com/file/d/')) {
+              const fileId = imageUrl.match(/\/d\/([^\/]*)/)[1];
+              imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+            }
+            
+            // Datum formatieren, falls vorhanden
+            let dateDisplay = '';
+            if (post.timestamp) {
+              const date = new Date(post.timestamp);
+              dateDisplay = `<span class="gallery-date">${date.toLocaleDateString()}</span>`;
+            }
+            
+            // HTML für das Galerie-Element zusammenbauen
+            item.innerHTML = `
+              <a href="${post.photo_url}" target="_blank">
+                <img src="${imageUrl}" alt="${post.text || 'Bild'}" class="gallery-image" onerror="this.src='/media/img/image-placeholder.png'">
+              </a>
+              <div class="gallery-info">
+                <p class="gallery-text">${post.text || ''}</p>
+                <p class="gallery-user">Von: ${post.user || 'Anonym'} ${dateDisplay}</p>
+                <p class="gallery-letterbox">Briefkasten: ${post.letterbox_id || 'Unbekannt'}</p>
+              </div>
+            `;
+            
+            gallery.appendChild(item);
+          });
+          
+          loading.style.display = 'none';
+          gallery.style.display = 'block';
+        } else {
+          // Keine Bilder gefunden
+          loading.style.display = 'none';
+          noImages.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Fehler beim Laden der Bilder:', error);
+        loading.textContent = 'Fehler beim Laden der Bilder: ' + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
