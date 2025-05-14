@@ -10,9 +10,9 @@ const char* ssid = "tinkergarden";
 const char* password = "strenggeheim";
 
 // Pin-Definitionen
-#define PIR_PIN 13
-#define LED_RING_PIN 12
-#define LED_COUNT 16
+#define PIR_PIN 6
+#define LED_RING_PIN 4
+#define LED_COUNT 12
 
 // Farben
 #define LED_COLOR_RED    Adafruit_NeoPixel::Color(255, 0, 0)
@@ -28,7 +28,7 @@ const char* galleryUrl = "https://im4-im-bild.vercel.app/gallery.html";
 WebServer server(80);
 
 // Briefkasten-ID
-const char* briefkastenId = "";
+const char* briefkastenId = "5678"; // Briefkasten-ID festlegen
 
 // LED-Ring
 Adafruit_NeoPixel ring = Adafruit_NeoPixel(LED_COUNT, LED_RING_PIN, NEO_GRB + NEO_KHZ800);
@@ -38,9 +38,12 @@ bool motionDetected = false;
 bool newDataFound = false;
 int newItemCount = 0;
 unsigned long lastMotionTime = 0;
-const int MOTION_TIMEOUT = 60000;
+const int MOTION_TIMEOUT = 5000;
 unsigned long lastCheck = 0;
 const int CHECK_INTERVAL = 10000;
+
+// Globale Variable für die IDs der neuen Einträge
+String newPostIds = "";
 
 void setup() {
   Serial.begin(115200);
@@ -102,6 +105,35 @@ void checkMotionSensor() {
   }
 }
 
+void markAsViewed(const String& postIds) {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("WLAN nicht verbunden.");
+    return;
+  }
+
+  WiFiClientSecure client;
+  client.setInsecure();
+
+  HTTPClient http;
+  String url = String(serverUrl) + "/mark_as_viewed.php";
+
+  http.begin(client, url);
+  http.addHeader("Content-Type", "application/json");
+
+  // JSON-Payload mit den Post-IDs erstellen
+  String payload = "{\"post_ids\": [" + postIds + "]}";
+
+  int code = http.POST(payload);
+
+  if (code == 200) {
+    Serial.println("Einträge erfolgreich als angeschaut markiert.");
+  } else {
+    Serial.printf("Fehler beim Markieren der Einträge: %d\n", code);
+  }
+
+  http.end();
+}
+
 void checkForNewData() {
   if (WiFi.status() != WL_CONNECTED) {
     Serial.println("WLAN nicht verbunden.");
@@ -109,15 +141,10 @@ void checkForNewData() {
   }
 
   WiFiClientSecure client;
-  client.setInsecure();  // <-- unsicher, aber einfach für Testzwecke
+  client.setInsecure();
 
   HTTPClient http;
-  String url = unloadUrl;
-
-  if (briefkastenId && strlen(briefkastenId) > 0) {
-    url += "&letterbox_id=";
-    url += briefkastenId;
-  }
+  String url = String(unloadUrl) + "&letterbox_id=" + briefkastenId + "&viewed=false";
 
   http.begin(client, url);
   int code = http.GET();
@@ -128,11 +155,23 @@ void checkForNewData() {
     DeserializationError error = deserializeJson(doc, payload);
 
     if (!error && doc["success"].as<bool>()) {
+      // Anzahl der neuen Einträge (viewed=0) aktualisieren
       newItemCount = doc["count"].as<int>();
       newDataFound = (newItemCount > 0);
 
-      Serial.print("Anzahl Bilder: ");
+      Serial.print("Anzahl neue Bilder: ");
       Serial.println(newItemCount);
+
+      if (newDataFound) {
+        // IDs der neuen Einträge sammeln
+        newPostIds = "";
+        for (JsonObject post : doc["posts"].as<JsonArray>()) {
+          if (!newPostIds.isEmpty()) {
+            newPostIds += ",";
+          }
+          newPostIds += post["post_id"].as<String>();
+        }
+      }
 
       if (motionDetected) {
         setRingColor(newDataFound ? LED_COLOR_GREEN : LED_COLOR_RED);
@@ -167,6 +206,18 @@ void setupEndpoints() {
     server.send(200, "application/json", response);
   });
 
+  server.on("/mark_viewed", HTTP_POST, []() {
+    if (!newDataFound || newPostIds.isEmpty()) {
+      server.send(400, "application/json", "{\"error\": \"No new data to mark as viewed\"}");
+      return;
+    }
+
+    // Einträge als angeschaut markieren
+    markAsViewed(newPostIds);
+
+    server.send(200, "application/json", "{\"success\": true}");
+  });
+
   server.on("/", HTTP_GET, []() {
     String html = "<html><body style='font-family: Arial, sans-serif; text-align: center; background-color: #273522; color: white;'>";
     html += "<h1>ESP32 Smart-Briefkasten</h1>";
@@ -174,7 +225,7 @@ void setupEndpoints() {
     html += "<p>Status: <span style='color: " + String(motionDetected ? "#33ff33" : "#aaaaaa") + ";'>" + 
             String(motionDetected ? "Bewegung erkannt" : "Keine Bewegung") + "</span></p>";
     html += "<p>Daten: <span style='color: " + String(newDataFound ? "#33ff33" : "#ff3333") + ";'>" + 
-            String(newDataFound ? String(newItemCount) + " Bilder verfügbar" : "Keine Bilder") + "</span></p>";
+            String(newItemCount) + " neue Bilder</span></p>";
 
     if (motionDetected) {
       unsigned long elapsedTime = millis() - lastMotionTime;
@@ -189,7 +240,7 @@ void setupEndpoints() {
     html += "<p>IP-Adresse: " + WiFi.localIP().toString() + "</p>";
     html += "<p><a href='/status' style='color: #7FD1B9;'>Status (JSON)</a></p></div>";
     html += "<p><a href='" + String(galleryUrl) + "?esp32=" + WiFi.localIP().toString() + 
-            "' target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Zur Galerie</a></p>";
+            "' onclick=\"fetch('/mark_viewed', {method: 'POST'})\" target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Zur Galerie</a></p>";
     html += "</body></html>";
 
     server.send(200, "text/html", html);
