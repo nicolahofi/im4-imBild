@@ -35,7 +35,7 @@ function loadGalleryImages(images) {
   images.forEach(image => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    item.onclick = () => window.open(image.photo_url, '_blank');
+    item.onclick = () => window.open(image.photo_url,);
 
     const info = document.createElement('div');
     info.className = 'gallery-info';
