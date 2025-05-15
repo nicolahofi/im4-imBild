@@ -1,100 +1,34 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vollständige Galerie</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="gallery_full.js" defer></script>
-  <style>
-    body {
-      background-color: #F4ECD6;
-      color: #4A582E;
-    }
-
-    h1 {
-      color: #4A582E;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .gallery-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 20px;
-      justify-content: center; /* Center horizontally */
-      align-items: center; /* Center vertically */
-    }
-
-    .gallery-item {
-      background: #FFFFFF;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 15px;
-      width: 300px; /* Adjust width */
-      height: 250px; /* Adjust height */
-    }
-
-    .gallery-image {
-      width: 100%;
-      height: 120px; /* Adjust height */
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .gallery-info {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .gallery-text {
-      font-style: italic;
-      color: #4A582E;
-      margin-bottom: 10px;
-    }
-
-    .gallery-date {
-      color: #4A582E;
-      font-size: 0.8rem;
-      opacity: 0.8;
-      position: absolute;
-      bottom: 0px;
-      right: 20px;
-    }
-
-    .gallery-item {
-      position: relative; /* Ensure the parent div is positioned for absolute positioning */
-    }
-
-    .logo {
-      width: 200px;
-      margin: 20px auto;
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/gallery_full.js" defer></script>
 </head>
-<body>
-  <div class="container">
-    <a href="gallery.html">
-      <img src="/media/img/logo_white.png" alt="Logo" class="logo">
-    </a>
-    <h1>Galerie</h1>
-    <div id="loading" class="loader">Bilder werden geladen...</div>
-    <div id="gallery" class="gallery-container">
-      <div class="gallery-item">
-        <img src="..." alt="..." class="gallery-image">
-        <div class="gallery-info">
-          <p class="gallery-text">Von: Nachricht hier</p>
-          <p class="gallery-date">Datum hier</p>
+
+
+<body class="background_white">
+    <div class="container">
+        <a href="gallery.html">
+            <img src="assets/img/logo_white.png" alt="Logo" class="logo-tablet">
+        </a>
+        <h1 class="h1_tablet">Galerie</h1>
+        <div id="loading" class="loader">Bilder werden geladen...</div>
+        <div id="gallery" class="gallery-container">
+            <div class="gallery-item">
+            <img src="..." alt="..." class="gallery-image">
+                <div class="gallery-info">
+                    <p class="gallery-text">Von: Nachricht hier</p>
+                    <p class="gallery-date">Datum hier</p>
+                </div>
+            </div>
         </div>
-      </div>
+        <div id="noImages" class="no-images" style="display: none;">Keine Bilder gefunden</div>
     </div>
-    <div id="noImages" class="no-images" style="display: none;">Keine Bilder gefunden</div>
-  </div>
 </body>
 </html>
