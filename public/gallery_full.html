@@ -12,6 +12,12 @@
       color: #4A582E;
     }
 
+    h1 {
+      color: #4A582E;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .gallery-container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -28,11 +34,13 @@
       flex-direction: column;
       justify-content: space-between;
       padding: 15px;
+      width: 300px; /* Adjust width */
+      height: 200px; /* Adjust height */
     }
 
     .gallery-image {
       width: 100%;
-      height: 150px;
+      height: 120px; /* Adjust height */
       object-fit: cover;
       border-radius: 8px;
     }
@@ -73,7 +81,7 @@
       <div class="gallery-item">
         <img src="..." alt="..." class="gallery-image">
         <div class="gallery-info">
-          <p class="gallery-text">Nachricht hier</p>
+          <p class="gallery-text">Von: Nachricht hier</p>
           <p class="gallery-date">Datum hier</p>
         </div>
       </div>
