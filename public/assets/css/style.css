@@ -161,7 +161,7 @@ body {
     width: 180px;
     height: auto;
     display: block;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 0 auto;
     z-index: 10;
 }
 
@@ -218,8 +218,8 @@ input[type="file"]::file-selector-button {
     border: none;
     padding: 8px 12px;
     border-radius: 8px;
-    background-color: #DF7A49;
-    color: white;
+    background-color: var(--custom_orange);
+    color: var(--custom_white);
     cursor: pointer;
     margin-right: 10px;
     content: "Bild auswählen";
