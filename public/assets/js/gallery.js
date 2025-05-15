@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  createImageModal();
+  // Initial alle Bilder laden
   loadImages();
 
   // Event-Listener für den Aktualisieren-Button
@@ -11,33 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Add a modal to display images
-function createImageModal() {
-  const modal = document.createElement('div');
-  modal.id = 'imageModal';
-  modal.style.position = 'fixed';
-  modal.style.top = '0';
-  modal.style.left = '0';
-  modal.style.width = '100%';
-  modal.style.height = '100%';
-  modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-  modal.style.display = 'none';
-  modal.style.justifyContent = 'center';
-  modal.style.alignItems = 'center';
-  modal.style.zIndex = '1000';
-
-  const img = document.createElement('img');
-  img.id = 'modalImage';
-  img.style.maxWidth = '90%';
-  img.style.maxHeight = '90%';
-  modal.appendChild(img);
-
-  modal.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  document.body.appendChild(modal);
-}
+// Funktion zum Transformieren von Google Drive Links
+// function transformGoogleDriveLink(link) {
+//   const match = link.match(/\/d\/([a-zA-Z0-9_-]+)\/view/);
+//   if (match && match[1]) {
+//     return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+//   }
+//   return link; // Fallback, falls der Link nicht passt
+// }
 
 // Funktion zum Laden der Galerie-Bilder
 function loadGalleryImages(images) {
@@ -54,12 +35,7 @@ function loadGalleryImages(images) {
   images.forEach(image => {
     const item = document.createElement('div');
     item.className = 'gallery-item';
-    item.onclick = () => {
-      const modal = document.getElementById('imageModal');
-      const modalImage = document.getElementById('modalImage');
-      modalImage.src = image.photo_url;
-      modal.style.display = 'flex';
-    };
+    item.onclick = () => { window.location.href = image.photo_url; };
 
     const info = document.createElement('div');
     info.className = 'gallery-info';
