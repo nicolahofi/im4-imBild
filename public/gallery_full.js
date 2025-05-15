@@ -30,20 +30,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const user = document.createElement('p');
         user.className = 'gallery-user';
-        user.textContent = `Absender: ${image.user}`;
-
-        const date = document.createElement('p');
-        date.className = 'gallery-date';
-        date.textContent = `Datum: ${new Date(image.timestamp).toLocaleDateString('de-DE')}`;
+        user.textContent = `Von: ${image.user}`;
 
         const text = document.createElement('p');
         text.className = 'gallery-text';
         text.textContent = image.text || 'Keine Nachricht';
 
-        info.appendChild(user);
-        info.appendChild(date);
-        info.appendChild(text);
+        const date = document.createElement('p');
+        date.className = 'gallery-date';
+        date.textContent = `${new Date(image.timestamp).toLocaleDateString('de-DE')}`;
+
+
         item.appendChild(info);
+        info.appendChild(user);
+        info.appendChild(text);
+        info.appendChild(date);
         gallery.appendChild(item);
       });
       loading.style.display = 'none';

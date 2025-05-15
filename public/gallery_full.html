@@ -23,6 +23,8 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
       padding: 20px;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
     }
 
     .gallery-item {
@@ -35,7 +37,7 @@
       justify-content: space-between;
       padding: 15px;
       width: 300px; /* Adjust width */
-      height: 200px; /* Adjust height */
+      height: 250px; /* Adjust height */
     }
 
     .gallery-image {
@@ -60,7 +62,13 @@
       color: #4A582E;
       font-size: 0.8rem;
       opacity: 0.8;
-      text-align: right;
+      position: absolute;
+      bottom: 0px;
+      right: 20px;
+    }
+
+    .gallery-item {
+      position: relative; /* Ensure the parent div is positioned for absolute positioning */
     }
 
     .logo {
@@ -75,7 +83,7 @@
     <a href="gallery.html">
       <img src="/media/img/logo_white.png" alt="Logo" class="logo">
     </a>
-    <h1>Vollständige Galerie</h1>
+    <h1>Galerie</h1>
     <div id="loading" class="loader">Bilder werden geladen...</div>
     <div id="gallery" class="gallery-container">
       <div class="gallery-item">
