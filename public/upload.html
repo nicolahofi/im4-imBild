@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Foto hochladen</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto hochladen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/uploadpage.js" defer></script>
 </head>
-<body>
-  <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+
+
+<body class="background_green">
+  <div class="container-phone">
     <a href="index.html">
-      <img src="/media/img/logo_green.png" alt="Logo" class="logo"   style="margin-bottom: 20px;"/>
+      <img src="assets/img/logo_green.png" alt="Logo" class="logo-phone"/>
     </a>
     <h1>Foto hochladen</h1>
 
-    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+    <div class="camera_gallery">
       <button onclick="document.getElementById('cameraInput').click()">
-        <img src="media/img/camera-solid.svg" alt="Kamera" style="width: 24px; height: 24px; vertical-align: middle;" />
+        <img class="icons" src="assets/img/camera-solid.svg" alt="Kamera"/>
       </button>
       <button onclick="document.getElementById('galleryInput').click()">
-        <img src="media/img/images-solid.svg" alt="Galerie" style="width: 24px; height: 24px; vertical-align: middle;" />
+        <img class="icons" src="assets/img/images-solid.svg" alt="Galerie"/>
       </button>
     </div>
 
@@ -28,81 +34,10 @@
     <!-- Galerie-Upload -->
     <input type="file" id="galleryInput" accept="image/*" style="display: none;" />
 
-    <textarea id="userText" placeholder="Deine Nachricht:" rows="3" cols="40" style="margin-bottom: 20px;"></textarea>
-    <button id="uploadButton" onclick="manualUpload()" style="margin-bottom: 20px;">Hochladen</button>
+    <textarea id="userText" placeholder="Deine Nachricht:" rows="3" cols="40"></textarea>
+    <button id="uploadButton" onclick="manualUpload()">Hochladen</button>
     <p id="status"></p>
 
-    <script>
-      let selectedFile = null;
-
-      document.getElementById('cameraInput').addEventListener('change', (event) => {
-        selectedFile = event.target.files[0];
-        document.getElementById('status').textContent = 'Datei ausgewählt: ' + selectedFile.name;
-      });
-
-      document.getElementById('galleryInput').addEventListener('change', (event) => {
-        selectedFile = event.target.files[0];
-        document.getElementById('status').textContent = 'Datei ausgewählt: ' + selectedFile.name;
-      });
-
-      async function manualUpload() {
-        if (!selectedFile) {
-          alert('Bitte ein Bild auswählen');
-          return;
-        }
-
-        const name = localStorage.getItem('name') || '';
-        const letterbox = localStorage.getItem('letterbox') || '';
-
-        if (!name || !letterbox) {
-          alert('Bitte melde dich zuerst an');
-          window.location.href = 'index.html';
-          return;
-        }
-
-        const userText = document.getElementById('userText').value;
-        document.getElementById('status').textContent = 'Upload läuft...';
-
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const base64 = reader.result.split(',')[1];
-
-          try {
-            const res = await fetch('/api/upload', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                name: selectedFile.name,
-                type: selectedFile.type,
-                data: base64,
-                text: userText,
-                userName: name,
-                letterboxId: letterbox
-              })
-            });
-
-            if (!res.ok) {
-              throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-
-            document.getElementById('status').textContent = 'Upload erfolgreich!';
-
-            // Nach erfolgreichem Upload das Formular zurücksetzen
-            selectedFile = null;
-            document.getElementById('cameraInput').value = '';
-            document.getElementById('galleryInput').value = '';
-            document.getElementById('userText').value = '';
-          } catch (error) {
-            document.getElementById('status').textContent = 'Fehler: ' + error.message;
-            console.error('Upload error:', error);
-          }
-        };
-
-        reader.readAsDataURL(selectedFile);
-      }
-    </script>
   </div>
 </body>
 </html>
