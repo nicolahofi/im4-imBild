@@ -11,7 +11,6 @@
 
 body {
     margin: 0;
-    padding: 20px;
     font-family: Sen, sans-serif;
     display: flex;
     justify-content: center;
@@ -177,14 +176,17 @@ button:active {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    width: 90%;
+    max-width: 400px;
 }
 
 .logo-phone {
-    position: relative;
+    position: fixed;
+    top: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
     width: 180px;
     height: auto;
-    display: block;
-    margin: 0 auto 0 auto;
     z-index: 10;
 }
 
@@ -217,42 +219,26 @@ button:active {
     vertical-align: middle;
 }
 
-.userText {
+#userText {
     width: 100%;
     padding: 12px;
-    margin-bottom: 16px;
     font-size: 1rem;
     border: none;
     border-radius: 12px;
     background-color: var(--custom_white);
     color: var(--custom_green);
-    min-height: 80px;
-    text-align: left;
-    width: 100%;
-    font-family: inherit;
 }
 
-input::placeholder,
-textarea::placeholder {
-    font-family: inherit;
-    color: var(--custom_green);
-    opacity: 0.7;
-}
-
-
-/* input[type="text"],
-input[type="file"],
-textarea {
+#name, #letterbox {
     width: 100%;
     padding: 12px;
-    margin-bottom: 16px;
     font-size: 1rem;
     border: none;
     border-radius: 12px;
     background-color: var(--custom_white);
     color: var(--custom_green);
     text-align: center;
-}
+} 
 
 /* Spezieller Stil für den File-Input */
 /* input[type="file"] {
@@ -384,7 +370,7 @@ button img {
 
 
 /* Zusätzliche Media Queries für sehr kleine Bildschirme */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
     .container {
         width: 100%;
         padding: 1rem 0.75rem;
@@ -410,18 +396,18 @@ button img {
         width: 120px;
         margin-bottom: 15px;
     }
-}
+} */
 
 /* Sicherstellen, dass der Viewport korrekt skaliert wird */
-@media (max-height: 600px) {
+/* @media (max-height: 600px) {
     body {
         align-items: flex-start;
         padding-top: 60px;
     }
-}
+} */
 
 /* Anpassungen für Geräte im Landscape-Modus */
-@media (max-height: 480px) and (orientation: landscape) {
+/* @media (max-height: 480px) and (orientation: landscape) {
     body {
         align-items: flex-start;
         padding-top: 20px;
@@ -439,13 +425,13 @@ button img {
         width: 100px;
         margin-bottom: 10px;
     }
-}
+} */
 
 
 
 
 
-
+/* 
 @media (min-width: 768px) {
   .gallery-item {
     padding: 20px;
@@ -458,4 +444,4 @@ button img {
   .gallery-date, .gallery-text {
     font-size: 1.2rem;
   }
-}
+} */
