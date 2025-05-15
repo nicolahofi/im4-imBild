@@ -188,6 +188,7 @@ button:active {
     width: 180px;
     height: auto;
     z-index: -10;
+    margin-bottom: 20px;
 }
 
 .h1-phone {
