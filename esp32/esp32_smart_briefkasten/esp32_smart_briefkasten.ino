@@ -218,36 +218,45 @@ void setupEndpoints() {
     server.send(200, "application/json", "{\"success\": true}");
   });
 
-  server.on("/", HTTP_GET, []() {
-    String html = "<html><body style='font-family: Arial, sans-serif; text-align: center; background-color: #273522; color: white;'>";
-    html += "<h1>ESP32 Smart-Briefkasten</h1>";
-    html += "<div style='margin: 20px; padding: 20px; background-color: rgba(255,255,255,0.1); border-radius: 10px;'>";
-    html += "<p>Status: <span style='color: " + String(motionDetected ? "#33ff33" : "#aaaaaa") + ";'>" + 
-            String(motionDetected ? "Bewegung erkannt" : "Keine Bewegung") + "</span></p>";
-    html += "<p>Daten: <span style='color: " + String(newDataFound ? "#33ff33" : "#ff3333") + ";'>" + 
-            String(newItemCount) + " neue Bilder</span></p>";
+server.on("/", HTTP_GET, []() {
+  String html = "<!DOCTYPE html><html lang='de'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+  html += "<style>";
+  html += "body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: #fdf5e6; height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; }";
+  html += ".briefkasten { position: absolute; top: 24px; right: 24px; background-color: #4A582E; color: white; padding: 12px 22px; border-radius: 16px; font-weight: 500; font-size: 1.2rem; }";
+  html += ".center-wrapper { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }";
+  html += ".message-box { background-color: #4A582E; color: white; padding: 32px 48px; border-radius: 16px; font-size: 1.8rem; text-align: center; max-width: 90%; margin-bottom: 20px; }";
+  html += ".button { background-color: #DF7A49; color: white; padding: 16px 32px; border: none; border-radius: 16px; font-size: 1.2rem; text-decoration: none; display: inline-block; margin-top: 20px; box-shadow: none; }";
+  html += ".button:hover { background-color: #c56a3e; }";
+  html += ".gallery-button { position: absolute; bottom: 24px; right: 24px; }";
+  html += "</style></head><body>";
 
-    if (motionDetected) {
-      unsigned long elapsedTime = millis() - lastMotionTime;
-      if (elapsedTime < MOTION_TIMEOUT) {
-        int remainingSeconds = (MOTION_TIMEOUT - elapsedTime) / 1000;
-        html += "<p>Zeit verbleibend: " + String(remainingSeconds) + " Sekunden</p>";
-      } else {
-        html += "<p>Timeout erreicht</p>";
-      }
-    }
+  html += "<div class='briefkasten'>Briefkasten: " + String(briefkastenId) + "</div>";
 
-    html += "<p>IP-Adresse: " + WiFi.localIP().toString() + "</p>";
-    html += "<p><a href='/status' style='color: #7FD1B9;'>Status (JSON)</a></p></div>";
+  if (newDataFound) {
+    html += "<div class='center-wrapper'>";
+    html += "<div class='message-box'>Du hast " + String(newItemCount) + " neue<br>Nachrichten</div>";
+    html += "<p><a href='" + String(galleryUrl) + "?letterbox_id=" + briefkastenId + "' target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;' onclick=\"fetch('/mark_viewed', {method: 'POST'})\">Zur Galerie</a></p>";    html += "</div>";
+  } else {
+    html += "<div class='center-wrapper'>";
+    html += "<div class='message-box'>Du hast keine neuen Nachrichten</div>";
+    html += "</div>";
+  }
+    html += "<a href='https://im4-im-bild.vercel.app/gallery_full.html' class='button gallery-button' target='_blank'>Galerie</a>";
 
-    if (newDataFound) {
-      html += "<p><a href='" + String(galleryUrl) + "?letterbox_id=" + briefkastenId + "' target='_blank' style='display: inline-block; background-color: #DF7A49; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;' onclick=\"fetch('/mark_viewed', {method: 'POST'})\">Zur Galerie</a></p>";
-    }
+  html += "<script>";
+  html += "async function markAndOpenGallery() {";
+  html += "  try {";
+  html += "    const res = await fetch('/mark_viewed', { method: 'POST' });";
+  html += "    if (res.ok) {";
+  html += "      window.open('https://im4-im-bild.vercel.app/gallery.html', '_blank');";
+  html += "    } else { alert('Fehler beim Markieren der Nachrichten.'); }";
+  html += "  } catch (e) { alert('Verbindung zum Server fehlgeschlagen.'); }";
+  html += "}";
+  html += "</script>";
 
-    html += "</body></html>";
-
-    server.send(200, "text/html", html);
-  });
+  html += "</body></html>";
+  server.send(200, "text/html", html);
+});
 }
 
 void setRingColor(uint32_t color) {

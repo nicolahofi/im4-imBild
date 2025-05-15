@@ -6,6 +6,20 @@
   <title>Vollständige Galerie</title>
   <link rel="stylesheet" href="style.css">
   <script src="gallery_full.js" defer></script>
+  <style>
+    .gallery-text {
+      color: #F4ECD6;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .gallery-date {
+      color: #F4ECD6;
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -14,7 +28,15 @@
     </a>
     <h1>Vollständige Galerie</h1>
     <div id="loading" class="loader">Bilder werden geladen...</div>
-    <div id="gallery" class="gallery-container"></div>
+    <div id="gallery" class="gallery-container">
+      <div class="gallery-item">
+        <img src="..." alt="..." class="gallery-image">
+        <div class="gallery-info">
+          <p class="gallery-text">Eintragstext hier</p>
+          <p class="gallery-date">Datum hier</p>
+        </div>
+      </div>
+    </div>
     <div id="noImages" class="no-images" style="display: none;">Keine Bilder gefunden</div>
   </div>
 </body>

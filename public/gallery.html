@@ -40,6 +40,14 @@
     .gallery-text {
       color: #F4ECD6;
       margin-bottom: 8px;
+      font-style: italic;
+    }
+    
+    .gallery-date {
+      color: #F4ECD6;
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 4px;
     }
     
     .gallery-user {
@@ -104,13 +112,21 @@
     <h1>Bilder-Galerie</h1>
     
     <div class="filter-container">
-      <p id="letterboxInfo" class="info-text">Angezeigt werden nur Einträge für Briefkasten-ID: 5678</p>
+      <p id="letterboxInfo" class="info-text">Briefkasten-ID: 5678</p>
       <button id="refreshButton" class="refresh-button">Aktualisieren</button>
       <button id="fullGalleryButton" class="refresh-button" onclick="window.location.href='gallery_full.html'">Vollständige Galerie anzeigen</button>
     </div>
     
     <div id="loading" class="loader">Bilder werden geladen...</div>
-    <div id="gallery" class="gallery-container"></div>
+    <div id="gallery" class="gallery-container">
+      <div class="gallery-item">
+        <img src="..." alt="..." class="gallery-image">
+        <div class="gallery-info">
+          <p class="gallery-text">Eintragstext hier</p>
+          <p class="gallery-date">Datum hier</p>
+        </div>
+      </div>
+    </div>
     <div id="noImages" class="no-images" style="display: none;">Keine Bilder gefunden</div>
   </div>
 </body>
