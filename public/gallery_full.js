@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const data = await response.json();
 
     if (data.success && data.count > 0) {
-      data.posts.forEach(image => {
+      data.posts.slice(0, 10).forEach(image => { // Limit to 10 items
         const item = document.createElement('div');
         item.className = 'gallery-item';
         item.onclick = () => window.open(image.photo_url, '_blank');
@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const date = document.createElement('p');
         date.className = 'gallery-date';
         date.textContent = `${new Date(image.timestamp).toLocaleDateString('de-DE')}`;
-
 
         item.appendChild(info);
         info.appendChild(user);
