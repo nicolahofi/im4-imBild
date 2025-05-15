@@ -31,6 +31,30 @@ body {
     color: var(--custom_white);
 }
 
+button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--custom_orange);
+    color: var(--custom_white);
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    font-weight: bold;
+    width: 100%;
+    max-width: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+  
+button:hover {
+    background-color: #c56a3e;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
 /* ---------------------------------tablet_end-------------------------------- */
 
 .logo-tablet {
@@ -164,7 +188,6 @@ body {
     z-index: 10;
 }
 
-
 .h1-phone {
     color: var(--custom_white);
     font-size: 1.8rem;
@@ -179,13 +202,45 @@ body {
     margin-bottom: 20px;
 }
 
+.file-select-button {
+    background-color: var(--custom_orange);
+    color: var(--custom_white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 .icons {
-    width: 24px;
+    width: 100px;
     height: 24px;
     vertical-align: middle;
 }
 
-input[type="text"],
+.userText {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--custom_white);
+    color: var(--custom_green);
+    min-height: 80px;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+    font-family: inherit;
+    color: var(--custom_green);
+    opacity: 0.7;
+}
+
+
+/* input[type="text"],
 input[type="file"],
 textarea {
     width: 100%;
@@ -213,7 +268,7 @@ textarea {
 } */
 
 /* Versteckt den standardmäßigen Text "no file chosen" */
-input[type="file"]::before {
+/* input[type="file"]::before {
     content: "";
     position: absolute;
     top: 0;
@@ -223,10 +278,10 @@ input[type="file"]::before {
     background-color: #F4ECD6;
     pointer-events: none;
     border-radius: 12px;
-}
+} */
 
 /* Custom Styling für den File-Input Button */
-input[type="file"]::file-selector-button {
+/* input[type="file"]::file-selector-button {
     border: none;
     padding: 8px 12px;
     border-radius: 8px;
@@ -256,32 +311,10 @@ button img {
     height: auto;
 }
 
-button {
-    padding: 12px 25px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 10px;
-    background-color: #DF7A49;
-    color: #F4ECD6;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    font-weight: bold;
-    width: 100%;
-    max-width: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-  
-button:hover {
-    background-color: #c56a3e;
-}
 
-button:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
+ */
 /* Status Styling */
-#status {
+/* #status {
     margin-top: 16px;
     color: #F4ECD6;
     font-size: 0.9rem;
@@ -301,9 +334,9 @@ button:active {
 #status a:hover {
     background-color: #fff;
 }
-
+ */
 /* Navigation Links */
-.nav-links {
+/* .nav-links {
     margin: 10px 0 20px 0;
     text-align: center;
 }
@@ -322,8 +355,8 @@ button:active {
 .nav-link:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-}
-
+} */
+ /* */ 
 
 
 

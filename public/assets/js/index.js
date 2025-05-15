@@ -23,3 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
+  const errorMessage = document.getElementById('error-message');
+
+  document.getElementById('save-and-continue').addEventListener('click', () => {
+    const letterbox = document.getElementById('letterbox').value.trim();
+
+    if (!letterbox) {
+      errorMessage.textContent = 'Bitte die Briefkasten ID ausfüllen.';
+      errorMessage.style.display = 'block';
+      return;
+    }
+
+    errorMessage.style.display = 'none'; // Fehlernachricht ausblenden, wenn das Feld ausgefüllt ist
+  });
+
+
