@@ -46,6 +46,14 @@ body {
     margin-bottom: 20px;
 }
 
+.container {
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
 .gallery-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -139,32 +147,16 @@ body {
 }
 
 
+/* ---------------------------------mobile_end-------------------------------- */
 
-
-
-
-
-
-
-
-
-
-
-
-
-.container {
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    padding: 1.5rem;
-    border-radius: 15px;
-}
-  
-.container div {
-    margin-bottom: 16px; /* Gleicher Abstand wie zwischen Nachricht und Hochladen */
+.container-phone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
-.logo {
+.logo-phone {
     position: relative;
     width: 180px;
     height: auto;
@@ -174,41 +166,8 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  h1 {
-    color: #F4ECD6;
+.h1-phone {
+    color: var(--custom_white);
     font-size: 1.8rem;
     margin-bottom: 25px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -223,13 +182,13 @@ textarea {
     font-size: 1rem;
     border: none;
     border-radius: 12px;
-    background-color: #F4ECD6;
-    color: #4A582E;
+    background-color: var(--custom_white);
+    color: var(--custom_green);
     text-align: center;
 }
 
 /* Spezieller Stil für den File-Input */
-input[type="file"] {
+/* input[type="file"] {
     padding: 10px;
     background-color: #F4ECD6;
     color: #4A582E;
@@ -239,7 +198,7 @@ input[type="file"] {
     border-radius: 12px;
     width: 100%;
     position: relative;
-}
+} */
 
 /* Versteckt den standardmäßigen Text "no file chosen" */
 input[type="file"]::before {

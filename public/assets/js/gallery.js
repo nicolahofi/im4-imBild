@@ -1,5 +1,3 @@
-// gallery.js - JavaScript für die Bildergalerie
-
 document.addEventListener('DOMContentLoaded', () => {
   // Initial alle Bilder laden
   loadImages();
@@ -14,13 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Funktion zum Transformieren von Google Drive Links
-function transformGoogleDriveLink(link) {
-  const match = link.match(/\/d\/([a-zA-Z0-9_-]+)\/view/);
-  if (match && match[1]) {
-    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-  }
-  return link; // Fallback, falls der Link nicht passt
-}
+// function transformGoogleDriveLink(link) {
+//   const match = link.match(/\/d\/([a-zA-Z0-9_-]+)\/view/);
+//   if (match && match[1]) {
+//     return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+//   }
+//   return link; // Fallback, falls der Link nicht passt
+// }
 
 // Funktion zum Laden der Galerie-Bilder
 function loadGalleryImages(images) {
@@ -44,11 +42,11 @@ function loadGalleryImages(images) {
 
     const user = document.createElement('p');
     user.className = 'gallery-user';
-    user.textContent = `Absender: ${image.user}`;
+    user.textContent = `Von: ${image.user}`;
 
     const date = document.createElement('p');
     date.className = 'gallery-date';
-    date.textContent = `Datum: ${new Date(image.timestamp).toLocaleDateString('de-DE')}`;
+    date.textContent = `${new Date(image.timestamp).toLocaleDateString('de-DE')}`;
 
     const text = document.createElement('p');
     text.className = 'gallery-text';
