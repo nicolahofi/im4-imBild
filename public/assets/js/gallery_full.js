@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       data.posts.slice(0, 10).forEach(image => { // Limit to 10 items
         const item = document.createElement('div');
         item.className = 'gallery-item';
-        item.onclick = () => window.open(image.photo_url,);
+        item.onclick = () => { window.location.href = image.photo_url; };
 
         const info = document.createElement('div');
         info.className = 'gallery-info';
