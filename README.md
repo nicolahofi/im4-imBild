@@ -46,24 +46,10 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Komponentenplan
 
-```
-+-------------------+         +-------------------+         +-------------------+
-|    ESP32          | <-----> |     Backend/API   | <-----> |   Datenbank       |
-|  (Briefkasten)    |  HTTPS  |  (Infomaniak, PHP)|   SQL   |   (MySQL, Infom.) |
-|  + eigene Page    |         +-------------------+         +-------------------+
-+-------------------+                 ^
-        |                             |  HTTPS
-        |                             |
-        v                             |
-+-------------------+                 |
-|   Web-Frontend    |-----------------+
-|   (Vercel)        |  HTTPS
-+-------------------+
-```
 
 **Beschreibung:**
 - **ESP32 (Briefkasten):** Erkennt Bewegung, prüft auf neue Nachrichten, steuert LEDs, kommuniziert per HTTP mit dem Backend.
-- **Backend/API:** PHP-Skripte (z.B. `unload.php`, `mark_as_viewed.php`, `/api/upload`), Schnittstelle zwischen ESP32, Web-Frontend und Datenbank.
+- **Backend/API:** PHP-Skripte, Schnittstelle zwischen ESP32, Web-Frontend und Datenbank.
 - **Datenbank:** Speichert Bilder, Nachrichten, Status (z.B. MySQL).
 - **Web-Frontend:** Galerie, Upload, Statusanzeige, Kommunikation mit Backend/API.
 
@@ -96,54 +82,46 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 **Entwicklungsprozess:**
 - Start mit der Definition der Anforderungen (smarter Briefkasten, Web-Galerie, Upload, LED-Feedback)
-- Zunächst ESP32-Programmierung und Hardwareaufbau (Bewegungssensor, LED-Ring)
-- Parallele Entwicklung des Web-Frontends (HTML, CSS, JS) und Backend (PHP, MySQL)
+- Parallele Arbeit am Hardwareaufbau und der Entwicklung des Web-Frontends.
 - API-Schnittstellen entworfen und getestet
-- UI/UX-Design iterativ verbessert (Farben, Responsive Design, Modale Bildanzeige)
+- UI/UX-Design angepasst (Farben, Responsive Design, Modale Bildanzeige)
 
 **Verworfene Lösungsansätze:**
-- Ursprünglich war ein anderes Logo/Design geplant
-- Erstes Konzept für die Bildanzeige öffnete neue Tabs, wurde auf Modal umgestellt
-- Verschiedene Ansätze für die Datenbankstruktur getestet
+- Ursprünglich war die Umsetzung mithilfe eines CMS, welches die Bilder handhabt geplant. 
 
 **Designentscheidungen:**
 - Einfache, moderne UI mit klaren Farben
-- Mobile-First-Ansatz für die Weboberfläche
+- Upload-Seite für Mobile optimiert
+- Gallerie für Tablet optimiert
 - Maximale Textlänge beim Upload auf 50 Zeichen begrenzt
 
 **Inspirationen:**
-- Smarte Briefkasten-Projekte auf GitHub
-- UI-Farben und Layouts von modernen Webapps
-
-**Fehlschläge & Umplanung:**
-- Probleme mit der WLAN-Verbindung des ESP32 (Debugging, Standortwechsel)
-- API-Fehlerbehandlung und CORS-Probleme
-- Anpassung der Galerie-Logik für bessere Performance
+- 
+- 
 
 **Challenges:**
-- Synchronisation zwischen ESP32, Backend und Frontend
-- Responsive Design für verschiedene Geräte
+- Handhabung von drei verschiedenen "Orten" (Vercel, Infomaniak, lokales Frontend)
 - Fehlerbehandlung bei Upload und API
 
 **Lerneffekt:**
 - Vertiefung in ESP32-Programmierung und Webentwicklung
-- Umgang mit REST-APIs und Datenbankanbindung
+- Umgang mit Datenbankanbindung
 - Besseres Verständnis für UI/UX und Responsive Design
 
 **Known Bugs:**
-- [PLATZHALTER: Hier bekannte Bugs eintragen]
+- Die lokale Seite auf dem ESP-32 hat am unteren Bildschirmrand einen weissen Strich.
 
 **Planung & Aufgabenverteilung:**
-- [PLATZHALTER: Wer hat was gemacht?]
+- Wir haben von Anfang an parallel an der Hardwarekomponente und der Software gearbeitet. Lisa hat sich vorallem um die Erstellung und Gestaltung der Upload-Page und danach mehrheitlich um die Hardware gekümmert. Nicola hat sich um alles rund um die Datenbank gekümmert und hat danach die Gallerie Seite gebaut. Den Code für den ESP-32 haben wir in Teamarbeit geschrieben. 
 
 **Hilfsmittel:**
-- GitHub Copilot, ChatGPT, Fritzing, draw.io, VS Code, Arduino IDE, Browser DevTools
+- YouTube Tutorial Google Drive: https://www.youtube.com/watch?v=1y0-IfRW114&t=2s
+- ChatGPT
+- Die Inputs unserer fantastischen Dozierenden und Lehrbeauftragten. :*
 
 ---
 
 ## Video-Dokumentation
-
-<!-- Hier den Link zum Video einfügen -->
 
 [Video-Dokumentation auf YouTube](LINK_ZUM_VIDEO)
 
