@@ -47,5 +47,7 @@ try {
     http_response_code(500);
     header('Content-Type: application/json');
     echo json_encode(['error' => 'Datenbankfehler beim Speichern.']);
+    error_log($e->getMessage());
+    error_log(json_encode($data));
 }
 ?>
