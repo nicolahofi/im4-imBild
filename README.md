@@ -71,7 +71,9 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Screenshots
 
-![galerie_im4](https://github.com/user-attachments/assets/810b7424-89b1-4cfd-84ce-282a4a74406b)
+<img src="[image_url.jpg](https://github.com/user-attachments/assets/810b7424-89b1-4cfd-84ce-282a4a74406b)" width="300">
+
+![galerie_im4]()
 ![upload_im4](https://github.com/user-attachments/assets/5f2cde05-bcaa-401f-a14d-7241b461ccd6)
 
 
