@@ -40,7 +40,7 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Flussdiagramm
 
-![flowchart](https://github.com/user-attachments/assets/4b0340cf-3731-4203-9771-7c7f5f4cf7ad)
+![screenflow_im4](https://github.com/user-attachments/assets/8e4a99ba-9e5b-4267-bde6-7ed919f11ae2)
 
 ---
 
@@ -71,9 +71,7 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Steckschema
 
-<!-- Hier das Breadboard-Steckschema als Bild einfügen -->
-
-![Steckschema](BILDPFAD_ZUM_STECKSCHEMA.png)
+![steckschema_im4](https://github.com/user-attachments/assets/b62cc28c-9131-4254-b794-cc095b4d63ff)
 
 **Beschreibung:**
 - ESP32 Dev Board
