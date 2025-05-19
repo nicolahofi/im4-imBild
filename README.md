@@ -46,6 +46,7 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Komponentenplan
 
+![komponentenplan_im4](https://github.com/user-attachments/assets/51ed046c-9cb8-4463-832a-3b53e027aa0a)
 
 **Beschreibung:**
 - **ESP32 (Briefkasten):** Erkennt Bewegung, prüft auf neue Nachrichten, steuert LEDs, kommuniziert per HTTP mit dem Backend.
