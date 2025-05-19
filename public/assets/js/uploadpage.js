@@ -33,7 +33,7 @@ reader.onload = async () => {
     const base64 = reader.result.split(',')[1];
 
     try {
-    const res = await fetch('/api/upload.js', {
+    const res = await fetch('/api/upload', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
