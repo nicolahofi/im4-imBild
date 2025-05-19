@@ -11,15 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Funktion zum Transformieren von Google Drive Links
-// function transformGoogleDriveLink(link) {
-//   const match = link.match(/\/d\/([a-zA-Z0-9_-]+)\/view/);
-//   if (match && match[1]) {
-//     return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-//   }
-//   return link; // Fallback, falls der Link nicht passt
-// }
-
 // Funktion zum Laden der Galerie-Bilder
 function loadGalleryImages(images) {
   const gallery = document.getElementById('gallery');
