@@ -15,15 +15,11 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
    - Flashe die Firmware auf den ESP32.
 
 2. **Webserver/Frontend aufsetzen**
-   -NODE
-   -
-   - Lege den Inhalt des `public/`-Ordners auf einen Webserver (z.B. Vercel, Netlify).
+   - Lege den Inhalt des `public/`-Ordners auf einen Webserver, der Node.js unterstützt (z.B. Vercel, Netlify).
    - Stelle sicher, dass die API-Endpunkte (`/api/upload`, `unload.php`, etc.) erreichbar sind.
 
-4. **Backend/API & Datenbank**
-   - "Norameler Server"
-   -
-   - Lege die PHP-Dateien und das `api/`-Verzeichnis auf dem Server ab.
+4. **Datenbank**
+   - Lege die PHP-Dateien auf dem Server ab. Vercel und Netlify ermöglichen keine herkömmliche Datenbank, deswegen musst du hier auf andere Angebote wie z.B. Infomaniak zurückgreifen.
    - Erstelle deine eigene db_connection.php mit deinen Zugangsdaten (host, datenbankname, username, passwort).
    - Erstelle die benötigten Tabellen in der Datenbank mit folgendem SQL-Befehl:
       CREATE TABLE posts (
@@ -44,20 +40,7 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Flussdiagramm
 
-<!-- Hier das Flussdiagramm einfügen (siehe oben, z.B. als Mermaid oder Bild) -->
-
-```mermaid
-graph TD
-    ESP32[ESP32 (Briefkasten)]
-    API[Backend/API (PHP, REST)]
-    DB[(Datenbank MySQL)]
-    WEB[Web-Frontend (HTML, CSS, JS)]
-
-    ESP32 -- HTTP --> API
-    API -- SQL --> DB
-    WEB -- HTTP --> API
-    API -- HTTP --> WEB
-```
+![flowchart](https://github.com/user-attachments/assets/4b0340cf-3731-4203-9771-7c7f5f4cf7ad)
 
 ---
 
