@@ -69,13 +69,11 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ---
 
-## Screenshots / Bilder / GIFs
+## Screenshots
 
-<!-- Hier Screenshots der Weboberfläche, Galerie, Upload, ESP32 im Einsatz, etc. einfügen -->
+![galerie_im4](https://github.com/user-attachments/assets/810b7424-89b1-4cfd-84ce-282a4a74406b)
+![upload_im4](https://github.com/user-attachments/assets/5f2cde05-bcaa-401f-a14d-7241b461ccd6)
 
-![Screenshot Galerie](BILDPFAD_GALERIE.png)
-![Screenshot Upload](BILDPFAD_UPLOAD.png)
-![ESP32 im Einsatz](BILDPFAD_ESP32.png)
 
 ---
 
@@ -95,6 +93,7 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 - Upload-Seite für Mobile optimiert
 - Gallerie für Tablet optimiert
 - Maximale Textlänge beim Upload auf 50 Zeichen begrenzt
+- Upload Seite mehrheitlich in Grün, Galerie mehrheitlich in Beige gehalten.
 
 **Inspirationen:**
 - Seit wir ausgezogen sind, fühlen sich unsere Eltern nicht mehr genug involviert in unserem Leben. Um dem entgegenzuwirken, haben wir imBild entwickelt. So können wir sie mit Bildern und Nachrichten aus unserem Alltag so einfach wie möglich und ohne den Speicherplatz unserer Geräte zu strapazieren auf dem Laufenden halten.
