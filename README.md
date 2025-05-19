@@ -97,8 +97,9 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 - Maximale Textlänge beim Upload auf 50 Zeichen begrenzt
 
 **Inspirationen:**
-- 
-- 
+- Seit wir ausgezogen sind, fühlen sich unsere Eltern nicht mehr genug involviert in unserem Leben. Um dem entgegenzuwirken, haben wir imBild entwickelt. So können wir sie mit Bildern und Nachrichten aus unserem Alltag so einfach wie möglich und ohne den Speicherplatz unserer Geräte zu strapazieren auf dem Laufenden halten.
+
+![moodboard_im4](https://github.com/user-attachments/assets/ddf71404-60e6-40c0-87c8-5a92c8ba800c)
 
 **Challenges:**
 - Handhabung von drei verschiedenen "Orten" (Vercel, Infomaniak, lokales Frontend)
@@ -127,12 +128,3 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 [Video-Dokumentation auf YouTube](LINK_ZUM_VIDEO)
 
 ---
-
-## Lizenz
-
-MIT License
-
----
-
-Fragen oder Feedback? Einfach im Code kommentieren oder ein Issue eröffnen.
-
