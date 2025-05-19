@@ -9,21 +9,34 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 ## Reproduzierbarkeit: Schritt-für-Schritt-Anleitung
 
 1. **ESP32 Firmware flashen**
-   - Öffne die `esp32/esp32_smart_briefkasten/esp32_smart_briefkasten.ino` im Arduino IDE oder PlatformIO.
-   - Passe WLAN-Zugangsdaten und ggf. die Briefkasten-ID an.
+   - Öffne die `esp32/esp32_smart_briefkasten/esp32_smart_briefkasten.ino` im Arduino IDE.
+   - Passe WLAN-Zugangsdaten und die Briefkasten-ID an.
    - Schließe den ESP32 wie im Steckschema unten an.
    - Flashe die Firmware auf den ESP32.
 
 2. **Webserver/Frontend aufsetzen**
-   - Lege den Inhalt des `public/`-Ordners auf einen Webserver (z.B. Vercel, Netlify, Apache, Nginx).
+   -NODE
+   -
+   - Lege den Inhalt des `public/`-Ordners auf einen Webserver (z.B. Vercel, Netlify).
    - Stelle sicher, dass die API-Endpunkte (`/api/upload`, `unload.php`, etc.) erreichbar sind.
 
-3. **Backend/API & Datenbank**
+4. **Backend/API & Datenbank**
+   - "Norameler Server"
+   -
    - Lege die PHP-Dateien und das `api/`-Verzeichnis auf dem Server ab.
-   - Passe ggf. die Datenbankverbindung in `db_connection.php` an.
-   - Erstelle die benötigten Tabellen in der Datenbank (siehe Quellcode für Struktur).
+   - Erstelle deine eigene db_connection.php mit deinen Zugangsdaten (host, datenbankname, username, passwort).
+   - Erstelle die benötigten Tabellen in der Datenbank mit folgendem SQL-Befehl:
+      CREATE TABLE posts (
+          user VARCHAR(50) NOT NULL,
+          post_id INT(9) PRIMARY KEY AUTO_INCREMENT ,
+          photo_url TEXT NOT NULL, 
+          text VARCHAR(50) NOT NULL,
+          timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+          letterbox_id INT(4) NOT NULL,
+          viewed BOOLEAN DEFAULT 0
+      );
 
-4. **Testen**
+5. **Testen**
    - Öffne die Weboberfläche im Browser und teste Upload, Galerie und Statusanzeige.
    - Prüfe die Funktion des ESP32 (Bewegungserkennung, LED, Webinterface).
 
@@ -53,14 +66,15 @@ graph TD
 ```
 +-------------------+         +-------------------+         +-------------------+
 |    ESP32          | <-----> |     Backend/API   | <-----> |   Datenbank       |
-|  (Briefkasten)    |   HTTP  |  (PHP, REST, DB)  |   SQL   |   (z.B. MySQL)    |
-+-------------------+         +-------------------+         +-------------------+
-        |                                                        ^
-        |                                                        |
-        v                                                        |
-+-------------------+         +-------------------+              |
-|   Web-Frontend    | <------------------------------------------+
-| (HTML, CSS, JS)   |   HTTP
+|  (Briefkasten)    |  HTTPS  |  (Infomaniak, PHP)|   SQL   |   (MySQL, Infom.) |
+|  + eigene Page    |         +-------------------+         +-------------------+
++-------------------+                 ^
+        |                             |  HTTPS
+        |                             |
+        v                             |
++-------------------+                 |
+|   Web-Frontend    |-----------------+
+|   (Vercel)        |  HTTPS
 +-------------------+
 ```
 
