@@ -88,7 +88,8 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 - UI/UX-Design angepasst (Farben, Responsive Design, Modale Bildanzeige)
 
 **Verworfene Lösungsansätze:**
-- Ursprünglich war die Umsetzung mithilfe eines CMS, welches die Bilder handhabt geplant. 
+- Ursprünglich war die Umsetzung mithilfe eines CMS, welches die Bilder handhabt geplant.
+- BILDSCHIRM INTEGRATION
 
 **Designentscheidungen:**
 - Einfache, moderne UI mit klaren Farben
@@ -107,6 +108,8 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 - Fehlerbehandlung bei Upload und API
 
 **Lerneffekt:**
+
+ NOCH AUSFORMULIEREN
 - Vertiefung in ESP32-Programmierung und Webentwicklung
 - Umgang mit Datenbankanbindung
 - Besseres Verständnis für UI/UX und Responsive Design
@@ -115,11 +118,11 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 - Die lokale Seite auf dem ESP-32 hat am unteren Bildschirmrand einen weissen Strich.
 
 **Planung & Aufgabenverteilung:**
-- Wir haben von Anfang an parallel an der Hardwarekomponente und der Software gearbeitet. Lisa hat sich vorallem um die Erstellung und Gestaltung der Upload-Page und danach mehrheitlich um die Hardware gekümmert. Nicola hat sich um alles rund um die Datenbank gekümmert und hat danach die Gallerie Seite gebaut. Den Code für den ESP-32 haben wir in Teamarbeit geschrieben. 
+- Wir haben von Anfang an parallel an der Hardwarekomponente und der Software gearbeitet. Lisa hat sich vorallem um die Erstellung und Gestaltung der Upload-Page und danach mehrheitlich um die Hardware gekümmert. Nicola hat sich um alles rund um die Datenbank gekümmert und hat danach die Galerie Seite gebaut. Den Code für den ESP-32 haben wir in Teamarbeit geschrieben. 
 
 **Hilfsmittel:**
 - YouTube Tutorial Google Drive: https://www.youtube.com/watch?v=1y0-IfRW114&t=2s
-- ChatGPT
+- ChatGPT & CoPilot
 - Die Inputs unserer fantastischen Dozierenden und Lehrbeauftragten. :*
 
 ---
