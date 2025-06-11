@@ -85,8 +85,8 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 - UI/UX-Design angepasst (Farben, Responsive Design, Modale Bildanzeige)
 
 **Verworfene Lösungsansätze:**
-- Ursprünglich war die Umsetzung mithilfe eines CMS, welches die Bilder handhabt geplant.
-- BILDSCHIRM INTEGRATION
+- Ursprünglich war die Umsetzung mithilfe eines CMS, welches die Bilder handhabt, geplant.
+- Eigentlich wollten wir ein integriertes Dispay nutzen. Allerdings kann unser ESP-32 einen Bildschirm mit einer für dieses Projekt sinnvollen Grösse nicht handhaben. 
 
 **Designentscheidungen:**
 - Einfache, moderne UI mit klaren Farben
@@ -106,10 +106,11 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 **Lerneffekt:**
 
- NOCH AUSFORMULIEREN
-- Vertiefung in ESP32-Programmierung und Webentwicklung
-- Umgang mit Datenbankanbindung
-- Besseres Verständnis für UI/UX und Responsive Design
+- Wir haben unser Wissen in der Programmierung mit dem ESP32 vertieft, insbesondere im Zusammenspiel mit Webtechnologien.
+- Wir lernten, wie man eine Datenbank sinnvoll einbindet und wie die Kommunikation zwischen Frontend, Backend und Datenbank funktioniert.
+- Unser Verständnis für UI/UX hat sich verbessert – besonders im Hinblick auf eine klare Nutzerführung und intuitive Bedienung.
+- Wir haben uns intensiver mit responsivem Design beschäftigt und gelernt, Oberflächen für verschiedene Bildschirmgrößen zu optimieren.
+
 
 **Known Bugs:**
 - Die lokale Seite auf dem ESP-32 hat am unteren Bildschirmrand einen weissen Strich.
@@ -120,12 +121,12 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 **Hilfsmittel:**
 - YouTube Tutorial Google Drive: https://www.youtube.com/watch?v=1y0-IfRW114&t=2s
 - ChatGPT & CoPilot
-- Die Inputs unserer fantastischen Dozierenden und Lehrbeauftragten. :*
+- Die Inputs der Dozierenden und Lehrbeauftragten.
 
 ---
 
 ## Video-Dokumentation
 
-[Video-Dokumentation auf YouTube](LINK_ZUM_VIDEO)
+[Video-Dokumentation auf YouTube](https://youtube.com/shorts/TZul8rfSHqQ))
 
 ---
