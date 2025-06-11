@@ -127,6 +127,6 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
 
 ## Video-Dokumentation
 
-[Video-Dokumentation auf YouTube](https://youtube.com/shorts/TZul8rfSHqQ))
+[Video-Dokumentation auf YouTube](https://youtube.com/shorts/TZul8rfSHqQ)
 
 ---
