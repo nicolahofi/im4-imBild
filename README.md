@@ -18,6 +18,9 @@ Dieses Projekt ist eine smarte Briefkasten-Lösung, die mit einem ESP32, einer W
    - Lege den Inhalt des `public/`-Ordners auf einen Webserver, der Node.js unterstützt (z.B. Vercel, Netlify).
    - Stelle sicher, dass die API-Endpunkte (`/api/upload`, `unload.php`, etc.) erreichbar sind.
 
+3. **Google Drive API aufsetzen**
+   - Setze die Google Drive API mit deinen persönlichen Zugangsdaten auf. Unter "Hilfsmittel" findest du ein YouTube Tutorial.
+
 4. **Datenbank**
    - Lege die PHP-Dateien auf dem Server ab. Vercel und Netlify ermöglichen keine herkömmliche Datenbank, deswegen musst du hier auf andere Angebote wie z.B. Infomaniak zurückgreifen.
    - Erstelle deine eigene db_connection.php mit deinen Zugangsdaten (host, datenbankname, username, passwort).
